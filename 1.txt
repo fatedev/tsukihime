@@ -1,0 +1,806 @@
+;-------------------------------------------------------------------------------
+; Copyright (C) 1999,2000 TYPE-MOON All right reserved.
+;
+;       TYPE-MOON Start Script File for NScripter Ver.1.24 or upper
+;
+;   title   : 月姫 フロー - 1日目
+;	file	: 1.txt
+;   written : N.Kiyotake
+;
+;	Ver.0.1	: 2000年 4月 8日	作成
+;	Ver.1.0 : 2000年 7月20日	夏コミVersion(HalfMoon)開始
+;	Ver.1.1	: 2000年 7月29日	夏コミVersion[デバッグモード/初期化取りやめ]
+;	Ver.1.2	: 2000年 8月 7日	夏コミ販売分
+;	Ver.1.3	: 2000年 8月15日	setcursorの追加
+;	Ver.2.0	: 2000年10月23日	月姫〜完全版〜
+;
+;	担当シーン	: 20〜50,89,201〜202(50,203は欠番)
+;-------------------------------------------------------------------------------
+
+;-------------------------------------------------------------------------------
+;	スクリプトブロック開始
+;-------------------------------------------------------------------------------
+*start
+
+!sd
+
+;デバッグモードなら1
+mov %debugmode,0
+
+;	2000/08/15 setcursor追加
+setcursor 0,":l/3,160,2;icon\cursor0.bmp",0,0
+setcursor 1,":l/3,160,2;icon\cursor1.bmp",0,0
+
+;シーンチェック(リリースでは呼び出さない)
+;goto *checks
+
+;クリアフラグチェック
+;mov %clear_ark_true,0
+;mov %clear_ark_good,1
+;mov %clear_ciel_true,0
+;mov %clear_ciel_good,1
+;mov %clear_akiha_true,0
+;mov %clear_akiha_good,1
+;mov %clear_kohaku_true,0
+;mov %clear_kohaku_good,1
+;mov %clear_hisui_true,0
+;mov %clear_hisui_good,1
+
+;文字の左上座標X, Y, 桁数, 行数, 文字サイズX, Y, 文字間隔X, Y, デフォルト表示速度, 太字フラグ, 影付きフラグ
+;ウィンドウ色味 or 画像ファイル名, ウィンドウ左上X, Y, ウィンドウ右下X, Y
+;setwindow 16,16, 23,16, 26,26, 0,2, 20, 1, 1,#aaaaaa, 0,0, 639,479
+setwindow 18,18, 23,16, 25,25, 0,4, 22, 1, 1,#aaaaaa, 0,0, 639,479
+
+;	TYPE-MOON
+bg "image\word\type_moon.jpg",%type_crossfade_mid
+
+resettimer
+waittimer 1000
+
+;	真っ黒
+bg #000000,%type_crossfade_mid
+
+;一番最初の起動なら、エフェクト初期化
+if %execution_cnt<=0 gosub *normal_effectspeed
+;一番最初の起動なら、オープニングを実行
+if %execution_cnt<=0 gosub *openning
+;一番最初の起動なら、ギャラリーのページを初期化する
+if %execution_cnt>0 skip 6
+mov %4020,1
+mov %4021,1
+mov %4022,1
+mov %4023,1
+mov %4024,1
+
+inc %execution_cnt
+
+if %debugmode!=1 skip 15
+;好感度ポイントチェック(DEBUG)
+lsp 0,":c;image\debug\ark.jpg",532,384
+lsp 1,":c;image\debug\ciel.jpg",532,400
+lsp 2,":c;image\debug\aki.jpg",532,416
+lsp 3,":c;image\debug\hisui.jpg",532,432
+lsp 4,":c;image\debug\koha.jpg",532,448
+
+lsp 10,p0,624,384
+lsp 11,p0,624,400
+lsp 12,p0,624,416
+lsp 13,p0,624,432
+lsp 14,p0,624,448
+
+windoweffect 10,300
+
+;タイトル＆メニューへ移動
+goto *title
+
+;-------------------------------------------------------------------------------
+;	メイン制御ブロック
+;-------------------------------------------------------------------------------
+;１日目
+;-BLOCK-------------------------------------------------------------------------
+*f20
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1020==1 skip 4
+gosub *s20
+mov %1020,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip20,
+		 "　２、スキップしない", *s20
+skip 3
+*skip20
+return
+;gosub *s20
+select	"　１、ホームルームまであと数分。今は教室に直行するべきだ。", *f21,
+		"　２、……なんだか気になる。様子を見にいこう。", *f22
+
+;-BLOCK--21---------------------------------------------------------------------
+*f21
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1021==1 skip 4
+gosub *s21
+mov %1021,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip21,
+		 "　２、スキップしない", *s21
+skip 3
+*skip21
+return
+;gosub *s21
+inc %akiha_regard
+goto *f23
+
+;-BLOCK--22---------------------------------------------------------------------
+*f22
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1022==1 skip 4
+gosub *s22
+mov %1022,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip22,
+		 "　２、スキップしない", *s22
+skip 3
+*skip22
+return
+;gosub *s22
+inc %ciel_regard
+goto *f23
+
+;-BLOCK--23---------------------------------------------------------------------
+*f23
+gosub *regard_update
+if %akiha_regard==1 goto *f24
+!sd
+if %sceneskip==1 && %1023==1 skip 4
+gosub *s23
+mov %1023,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip23,
+		 "　２、スキップしない", *s23
+skip 3
+*skip23
+return
+;gosub *s23
+select	"　１、教室に残って食事をとる。", *f25,
+		"　２、食堂に食べに行く。", *f26,
+		"　３、廊下に出て考える。", *f27
+
+;-BLOCK--24---------------------------------------------------------------------
+*f24
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1024==1 skip 4
+gosub *s24
+mov %1024,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip24,
+		 "　２、スキップしない", *s24
+skip 3
+*skip24
+return
+;gosub *s24
+select	"　１、廊下に出て考える。", *f28,
+		"　２、食堂に食べに行く。", *f29,
+		"　３、教室に残って食事をとる。", *f30
+
+;-BLOCK--25---------------------------------------------------------------------
+*f25
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1025==1 skip 4
+gosub *s25
+mov %1025,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip25,
+		 "　２、スキップしない", *s25
+skip 3
+*skip25
+return
+;gosub *s25
+goto *f31
+
+;-BLOCK--26---------------------------------------------------------------------
+*f26
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1026==1 skip 4
+gosub *s26
+mov %1026,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip26,
+		 "　２、スキップしない", *s26
+skip 3
+*skip26
+return
+;gosub *s26
+goto *f31
+
+;-BLOCK--27---------------------------------------------------------------------
+*f27
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1027==1 skip 4
+gosub *s27
+mov %1027,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip27,
+		 "　２、スキップしない", *s27
+skip 3
+*skip27
+return
+;gosub *s27
+inc %ciel_regard
+goto *f31
+
+;-BLOCK--28---------------------------------------------------------------------
+*f28
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1028==1 skip 4
+gosub *s28
+mov %1028,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip28,
+		 "　２、スキップしない", *s28
+skip 3
+*skip28
+return
+;gosub *s28
+goto *f31
+
+;-BLOCK--29---------------------------------------------------------------------
+*f29
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1029==1 skip 4
+gosub *s29
+mov %1029,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip29,
+		 "　２、スキップしない", *s29
+skip 3
+*skip29
+return
+;gosub *s29
+goto *f31
+
+;-BLOCK--30---------------------------------------------------------------------
+*f30
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1030==1 skip 4
+gosub *s30
+mov %1030,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip30,
+		 "　２、スキップしない", *s30
+skip 3
+*skip30
+return
+;gosub *s30
+inc %akiha_regard
+inc %flgM
+goto *f31
+
+;-BLOCK--31---------------------------------------------------------------------
+*f31
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1031==1 skip 4
+gosub *s31
+mov %1031,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip31,
+		 "　２、スキップしない", *s31
+skip 3
+*skip31
+return
+;gosub *s31
+select	"　１、いいかげん覚悟をきめて、屋敷に帰ることにしよう。", *f32,
+		"　２、もう少しだけ学校に残っていよう。", *f33
+
+;-BLOCK--32---------------------------------------------------------------------
+*f32
+gosub *regard_update
+;シーンを表示する前に移動する
+if %flgM>=1 goto *f35
+if %akiha_regard>=1 goto *f502
+;gosub *s32
+goto *f36
+
+;-BLOCK-502---------------------------------------------------------------------
+*f502
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1502==1 skip 4
+gosub *s502
+mov %1502,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip502,
+		 "　２、スキップしない", *s502
+skip 3
+*skip502
+return
+;gosub *s502
+inc %flg6
+goto *f36
+
+;-BLOCK--33---------------------------------------------------------------------
+*f33
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1033==1 skip 4
+gosub *s33
+mov %1033,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip33,
+		 "　２、スキップしない", *s33
+skip 3
+*skip33
+return
+;gosub *s33
+if %ciel_regard>=2 goto *f34
+goto *f89
+
+;-BLOCK--34---------------------------------------------------------------------
+*f34
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1034==1 skip 4
+gosub *s34
+mov %1034,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip34,
+		 "　２、スキップしない", *s34
+skip 3
+*skip34
+return
+;gosub *s34
+inc %ciel_regard
+goto *f36
+
+;-BLOCK--89---------------------------------------------------------------------
+*f89
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1089==1 skip 4
+gosub *s89
+mov %1089,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip89,
+		 "　２、スキップしない", *s89
+skip 3
+*skip89
+return
+;gosub *s89
+goto *f36
+
+;-BLOCK--35---------------------------------------------------------------------
+*f35
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1035==1 skip 4
+gosub *s35
+mov %1035,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip35,
+		 "　２、スキップしない", *s35
+skip 3
+*skip35
+return
+;gosub *s35
+;inc %akiha_regard
+inc %flg6
+goto *f36
+
+;-BLOCK--36---------------------------------------------------------------------
+*f36
+gosub *regard_update
+;シーンを表示する前に移動する
+if %clear_hisui!=0 goto *f201
+if %cleared!=0 goto *f37
+!sd
+if %sceneskip==1 && %1036==1 skip 4
+gosub *s36
+mov %1036,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip36,
+		 "　２、スキップしない", *s36
+skip 3
+*skip36
+return
+;gosub *s36
+goto *f40
+
+;-BLOCK--37---------------------------------------------------------------------
+*f37
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1037==1 skip 4
+gosub *s37
+mov %1037,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip37,
+		 "　２、スキップしない", *s37
+skip 3
+*skip37
+return
+;gosub *s37
+select	"　１、妹の秋葉の事だ。", *f38,
+		"　２、元気だった女の子の事だ。", *f39
+
+;-BLOCK--201--------------------------------------------------------------------
+*f201
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1201==1 skip 4
+gosub *s201
+mov %1201,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip201,
+		 "　２、スキップしない", *s201
+skip 3
+*skip201
+return
+;gosub *s201
+select	"　１、妹の秋葉の事だ。", *f38,
+		"　２、元気だった女の子の事だ。", *f39,
+		"　３、窓際の少女の事だ。", *f202
+
+;-BLOCK--38---------------------------------------------------------------------
+*f38
+gosub *regard_update
+;gosub *s38
+inc %akiha_regard
+goto *f40
+
+;-BLOCK--39---------------------------------------------------------------------
+*f39
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1039==1 skip 4
+gosub *s39
+mov %1039,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip39,
+		 "　２、スキップしない", *s39
+skip 3
+*skip39
+return
+;gosub *s39
+add %hisui_regard,2
+goto *f41
+
+;-BLOCK--202--------------------------------------------------------------------
+*f202
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1202==1 skip 4
+gosub *s202
+mov %1202,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip202,
+		 "　２、スキップしない", *s202
+skip 3
+*skip202
+return
+;gosub *s202
+add %kohaku_regard,3
+goto *f41
+
+;-BLOCK--40---------------------------------------------------------------------
+*f40
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1040==1 skip 4
+gosub *s40
+mov %1040,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip40,
+		 "　２、スキップしない", *s40
+skip 3
+*skip40
+return
+;gosub *s40
+goto *f42
+
+;-BLOCK--41---------------------------------------------------------------------
+*f41
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1041==1 skip 4
+gosub *s41
+mov %1041,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip41,
+		 "　２、スキップしない", *s41
+skip 3
+*skip41
+return
+;gosub *s41
+goto *f42
+
+;-BLOCK--42---------------------------------------------------------------------
+*f42
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1042==1 skip 4
+gosub *s42
+mov %1042,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip42,
+		 "　２、スキップしない", *s42
+skip 3
+*skip42
+return
+;gosub *s42
+select	"　１、居間に行って秋葉と話をしよう。", *f43,
+		"　２、自室で大人しくしていよう。", *f44,
+		"　３、琥珀さんの部屋にテレビを見にいこう。", *f45
+
+;-BLOCK--43---------------------------------------------------------------------
+*f43
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1043==1 skip 4
+gosub *s43
+mov %1043,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip43,
+		 "　２、スキップしない", *s43
+skip 3
+*skip43
+return
+;gosub *s43
+inc %akiha_regard
+if %flg6>=1 goto *f46
+goto *f47
+
+;-BLOCK--44---------------------------------------------------------------------
+*f44
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1044==1 skip 4
+gosub *s44
+mov %1044,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip44,
+		 "　２、スキップしない", *s44
+skip 3
+*skip44
+return
+;gosub *s44
+inc %hisui_regard
+if %flg6>=1 goto *f46
+goto *f47
+
+;-BLOCK--45---------------------------------------------------------------------
+*f45
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1045==1 skip 4
+gosub *s45
+mov %1045,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip45,
+		 "　２、スキップしない", *s45
+skip 3
+*skip45
+return
+;gosub *s45
+;inc %kohaku_regard
+if %flg6>=1 goto *f46
+goto *f47
+
+;-BLOCK--46---------------------------------------------------------------------
+*f46
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1046==1 skip 4
+gosub *s46
+mov %1046,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip46,
+		 "　２、スキップしない", *s46
+skip 3
+*skip46
+return
+;gosub *s46
+;アルクェイドをクリアしていなくて、かつ、シェルをクリアしていなかったら、f47aへ移動する。
+if %clear_ark==0 && %clear_ciel==0 goto *f47a
+select	"　１、様子を見に行く。", *f47a,
+		"　２、大人しく眠る。", *f46b
+*f46b
+if %hisui_regard>%akiha_regard && %hisui_regard>%kohaku_regard goto *f49
+if %kohaku_regard>%akiha_regard && %kohaku_regard>%hisui_regard goto *f203
+goto *f48
+
+;-BLOCK--47---------------------------------------------------------------------
+*f47
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1047==1 skip 4
+gosub *s47
+mov %1047,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip47,
+		 "　２、スキップしない", *s47
+skip 3
+*skip47
+return
+;gosub *s47
+goto *f47a
+
+;-BLOCK--47a---------------------------------------------------------------------
+*f47a
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1547==1 skip 4
+gosub *s47a
+mov %1547,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip47a,
+		 "　２、スキップしない", *s47a
+skip 3
+*skip47a
+return
+;gosub *s47a
+add %ark_regard,3
+goto *f51
+
+;-BLOCK--48---------------------------------------------------------------------
+*f48
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1048==1 skip 4
+gosub *s48
+mov %1048,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip48,
+		 "　２、スキップしない", *s48
+skip 3
+*skip48
+return
+;gosub *s48
+goto *f204
+
+;-BLOCK--49---------------------------------------------------------------------
+*f49
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1049==1 skip 4
+gosub *s49
+mov %1049,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip49,
+		 "　２、スキップしない", *s49
+skip 3
+*skip49
+return
+;gosub *s49
+goto *f205
+
+;-BLOCK--203--------------------------------------------------------------------
+*f203
+gosub *regard_update
+!sd
+if %sceneskip==1 && %1999==1 skip 4
+gosub *s203
+mov %1999,1
+skip 9
+このシーンは一度表示されたことがあります。
+スキップしますか？
+br
+selgosub "　１、スキップする", *skip203,
+		 "　２、スキップしない", *s203
+skip 3
+*skip203
+return
+;gosub *s203
+goto *f205
+
+;-------------------------------------------------------------------------------
+;	スクリプトブロック終了
+;-------------------------------------------------------------------------------
+

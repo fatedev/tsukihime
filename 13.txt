@@ -1,0 +1,2074 @@
+;-------------------------------------------------------------------------------
+; Copyright (C) 1999,2000 TYPE-MOON All right reserved.
+;
+;       TYPE-MOON Start Script File for NScripter Ver.1.24 or upper
+;
+;   title   : 月姫 フロー - サブルーチン
+;	file	: 13.txt
+;   written : N.Kiyotake
+;
+;	Ver.0.1	: 2000/04/08	作成
+;	Ver.1.0 : 2000/07/29	夏コミVersion(HalfMoon)
+;	Ver.2.0	: 2000/11/04	冬コミVersion開始
+;-------------------------------------------------------------------------------
+
+;-------------------------------------------------------------------------------
+;	スクリプトブロック開始
+;-------------------------------------------------------------------------------
+
+;-------------------------------------------------------------------------------
+;	チェック
+*checks
+selgosub	"プロローグ・１日目（２０）", *f20,
+			"（５１）", *f51,
+			"（６９）", *f69,
+			"（９４）", *f94,
+			"（９８）", *f98,
+			"（１５９）", *f159,
+			"（１６０）", *f160,
+			"（１６２）", *f162,
+			"次", *next1
+goto *checks
+
+*next1
+selgosub	"（１０７）", *f107,
+			"（１２５）", *f125,
+			"（１２６）", *f126,
+			"（１４３）", *f143,
+			"（１５９）", *f159,
+			"（１６２）", *f162,
+			"（１８３）", *f183,
+			"次", *next2
+goto *checks
+
+*next2
+selgosub	"（１８６）", *f186,
+			"（１９４）", *f194,
+			"（１９９）", *f199,
+			"（２００）", *f200,
+			"（２６０）", *f260,
+			"（２７１）", *f271,
+			"（２７３）", *f273,
+			"次", *next3
+goto *checks
+
+*next3
+selgosub	"（２８４）", *f284,
+			"（２８８）", *f288,
+			"（２８９）", *f289,
+			"（３０７）", *f307,
+			"（３１１）", *f311,
+			"（５２）", *f52,
+			"（５３）", *f53
+goto *checks
+
+
+;-------------------------------------------------------------------------------
+;	前半用小タイトル
+*right_phase
+setwindow 18,18, 23,16, 25,25, 0,4, 22, 1, 1,#ffffff, 0,0, 639,479
+windoweffect 1
+;カーソルの表示を行わない
+setcursor 0,":c;icon\hollow.bmp",0,0
+setcursor 1,":c;icon\hollow.bmp",0,0
+;<右カーテン(速)>
+bg $phasebg,%type_rcartain_fst
+;<左カーテン(速)>
+ld r,$phasetitle_a,%type_lcartain_fst
+lsp 15,$phasetitle_b,320,440,0
+mov %flushcount,0
+resettimer
+waittimer 16
+msp 15,0,0,16
+inc %flushcount
+print 1
+if %flushcount<16 skip -5
+\
+csp -1
+bg #000000,%type_crossfade_fst
+setwindow 18,18, 23,16, 25,25, 0,4, 22, 1, 1,#aaaaaa, 0,0, 639,479
+windoweffect 10, 300
+setcursor 0,":l/3,160,2;icon\cursor0.bmp",0,0
+setcursor 1,":l/3,160,2;icon\cursor1.bmp",0,0
+return
+
+;-------------------------------------------------------------------------------
+;	後半用小タイトル
+*left_phase
+setwindow 18,18, 23,16, 25,25, 0,4, 22, 1, 1,#ffffff, 0,0, 639,479
+windoweffect 1
+;カーソルの表示を行わない
+setcursor 0,":c;icon\hollow.bmp",0,0
+setcursor 1,":c;icon\hollow.bmp",0,0
+;１
+;<左カーテン(速)>
+bg $phasebg,%type_lcartain_fst
+;２
+;<右カーテン(速)>
+ld l,$phasetitle_a,%type_rcartain_fst
+;３
+cmp %dispdays,$phasetitle_b,""
+if %dispdays!=0 lsp 15,$phasetitle_b,0,48,0
+;４
+mov %flushcount,0
+;５
+resettimer
+waittimer 16
+cmp %dispdays,$phasetitle_b,""
+if %dispdays!=0 msp 15,0,0,16
+inc %flushcount
+print 1
+if %flushcount<16 skip -6
+\
+csp -1
+bg #000000,%type_crossfade_fst
+setwindow 18,18, 23,16, 25,25, 0,4, 22, 1, 1,#aaaaaa, 0,0, 639,479
+windoweffect 10, 300
+setcursor 0,":l/3,160,2;icon\cursor0.bmp",0,0
+setcursor 1,":l/3,160,2;icon\cursor1.bmp",0,0
+return
+
+;-------------------------------------------------------------------------------
+;	オープニング
+*openning
+setwindow 18,18, 23,16, 25,25, 0,4, 22, 1, 1,#ffffff, 0,0, 639,479
+windoweffect 1
+;カーソルの表示を行わない
+setcursor 0,":c;icon\hollow.bmp",0,0
+setcursor 1,":c;icon\hollow.bmp",0,0
+autoclick 1500
+
+;CD-DA「メインテーマ・ループ」
+play "*9"
+
+br
+br
+br
+br
+br
+br
+br
+―――――――ふと、目が覚めた。\
+
+br
+br
+br
+br
+br
+　　　　　　　　　　暗い夜。
+　　　　　　家の中にみんなはいない。\
+br
+br
+br
+br
+br
+br
+　　　　　　　一人きりはこわいから
+　　　　　みんなにあいたくて庭にでた。\
+
+; 月（遠い）<クロスフェード(中)>
+bg "image\bg\ima_02.jpg",%type_crossfade_mid
+!w1000
+
+br
+br
+br
+br
+br
+　　　　　　　屋敷の庭はすごく広くて
+　　　　　まわりは深い深い森に囲まれて。
+　　　　　　　森の木々はくろく・くろく
+　　　　　　大きなカーテンのようだった。\
+
+br
+br
+br
+br
+br
+　　　　それは　まるでどこかの劇場みたい。
+　　　　　ざあ　と木々のカーテンが開いて、
+　　　すぐに演劇が始まるのかとわくわくした。\
+
+br
+br
+br
+br
+br
+　　　　　　遠くでいろんな音がしてる。
+　　　　　　くろい木々のカーテンの奥。
+　　　森の中で　みんなが楽しそうに騒いでる。\
+br
+br
+br
+br
+br
+br
+　　　　　　　　幕はまだ開かない。
+　　がまんできずに　森の中へと入っていった。\
+
+; 黒画面<クロスフェード(遅)>
+bg "image\bg\ima_10.jpg",%type_crossfade_slw
+
+
+br
+br
+br
+br
+br
+br
+　　　　　　　　すごく、くらい。
+　　　森はふかくて　ツメタイヒカリも届かない。\
+
+
+br
+br
+br
+br
+br
+　　　　　　　　　ただ　寒い。
+　眼球の奥がしびれてしまうぐらいの　寒い冬。\
+
+br
+br
+br
+br
+br
+　　　　　　自分の名前をよばれた気がして
+　　　　　　　もっと奥へと歩いていく。\
+br
+br
+br
+br
+br
+　　　　　　木々のヴェールを抜けたあと。
+　　　森の広場にはみんなそろって待っていた。
+　　　　　　みんなふぞろいのかっこう。
+　　　　　　みんなばらばらのてあし。\
+br
+br
+br
+br
+br
+br
+br
+　　　　一面　まっかになってる森のひろば。\
+
+br
+br
+br
+ ───わからない。\
+
+br
+br
+br
+br
+br
+br
+　バラバラにするために見知らぬ人がやってくる。\
+
+br
+br
+br
+br
+br
+ ───よく　わからない。\
+
+
+br
+br
+br
+br
+br
+br
+　　　　　　けれど誰かが前にやってきて
+　　　　　かわりにバラバラにされてくれた。\
+
+br
+br
+br
+br
+br
+br
+br
+ ───ボクは子供だから　よく　わからない。
+\
+
+; 血しぶき（画面いっぱい）<クロスフェード(速)>
+bg "image\bg\ima_13b.jpg",%type_crossfade_fst
+
+br
+br
+br
+br
+br
+　　　　　　　　　びしゃりと。
+　　　　　　暖かいものが顔にかかった。
+　　　　　　　　　　あかい。
+　　　　　　トマトみたいに　あかい水。\
+
+br
+br
+br
+br
+br
+　　　　　　　バラバラになった人。
+　　　　　その　おかあさん　という人は　
+　　　それっきりボクの名前を呼ばなくなった。\
+
+br
+br
+br
+br
+br
+br
+br
+br
+br
+―――――ほんとうに　よくわからないけれど。\
+
+br
+br
+br
+br
+br
+br
+　　　　　　　　　ただ寒くて。
+　　　意味もなく　泣いてしまいそうだった。\
+
+
+; 白画面<クロスフェード(速)>
+bg "image\bg\ima_10.jpg",%type_crossfade_slw
+
+br
+br
+br
+br
+br
+br
+　　　　目にあたたかい緋色が混ざってくる。
+　　　　　　眼球の奥に染みこんでくる。
+　　　　　だけどぜんぜん気にならない。
+　　　　夜空には、ただ一人きりの月がある。\
+
+
+; 月（画面いっぱい）<クロスフェード(中)>
+bg "image\bg\ima_01.jpg",%type_crossfade_slw
+
+br
+br
+br
+br
+br
+br
+　　　　　　　　　すごく不思議。
+　　どうしていままで気がつかなかったんだろう。\
+
+br
+br
+br
+br
+br
+br
+br
+ ───なんて、ツメタイ───わるい、ユメ。\
+
+
+br
+br
+br
+br
+br
+br
+br
+　　　　　ああ───気がつかなかった。\
+br
+br
+br
+br
+br
+br
+br
+　　　　　　　こんやはこんなにも\
+br
+br
+br
+br
+br
+br
+br
+　つきが、きれい───────だ─────\
+
+;CD-DA停止
+playstop
+
+
+setwindow 18,18, 23,16, 25,25, 0,4, 22, 1, 1,#aaaaaa, 0,0, 639,479
+windoweffect 10,300
+setcursor 0,":l/3,160,2;icon\cursor0.bmp",0,0
+setcursor 1,":l/3,160,2;icon\cursor1.bmp",0,0
+autoclick 0
+
+return
+
+;-------------------------------------------------------------------------------
+;エンディング(スタッフロール)
+*ending
+mov %staffrollwait,4000
+
+play "*10"
+
+setwindow 18,18, 23,16, 25,25, 0,4, 22, 1, 1,#ffffff, 0,0, 639,479
+setcursor 0,":c;icon\hollow.bmp",0,0
+setcursor 1,":c;icon\hollow.bmp",0,0
+
+bg "image\word\ed_01.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_02.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_03.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_04.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_05.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_06.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_07.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_08.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+;play "*10"
+
+bg "image\word\ed_09.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_10.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_11.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_12.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_13.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_14.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_15.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+bg "image\word\ed_16.jpg",%type_crossfade_mid
+delay %staffrollwait
+
+delay 25000
+
+;CD-DA停止
+playstop
+
+bg "image\word\ed_17.jpg",%type_crossfade_slw
+
+\
+
+setwindow 18,18, 23,16, 25,25, 0,4, 22, 1, 1,#aaaaaa, 0,0, 639,479
+setcursor 0,":l/3,160,2;icon\cursor0.bmp",0,0
+setcursor 1,":l/3,160,2;icon\cursor1.bmp",0,0
+return
+
+;-------------------------------------------------------------------------------
+;プレイ終了
+*endofplay
+
+;変数初期化
+mov %ark_regard,0
+mov %ciel_regard,0
+mov %akiha_regard,0
+mov %kohaku_regard,0
+mov %hisui_regard,0
+
+mov %flg1,0
+mov %flg2,0
+mov %flg3,0
+mov %flg4,0
+mov %flg5,0
+mov %flg6,0
+mov %flg7,0
+mov %flg8,0
+mov %flg9,0
+mov %flgA,0
+mov %flgB,0
+mov %flgC,0
+mov %flgD,0
+mov %flgE,0
+mov %flgF,0
+mov %flgG,0
+mov %flgH,0
+mov %flgI,0
+mov %flgJ,0
+mov %flgK,0
+mov %flgL,0
+mov %flgM,0
+mov %flgN,0
+mov %flgO,0
+mov %flgP,0
+mov %flgQ,0
+mov %flgR,0
+mov %flgS,0
+mov %flgT,0
+mov %flgU,0
+mov %flgV,0
+mov %flgW,0
+mov %flgX,0
+mov %flgY,0
+mov %flgZ,0
+
+goto *title
+
+;-------------------------------------------------------------------------------
+;デバッグ用サブルーチン
+*regard_update
+if %debugmode!=1 return
+csp 10
+mov %regard,%ark_regard
+mov %spno,10
+mov %ypos,384
+gosub *regard_check
+csp 11
+mov %regard,%ciel_regard
+mov %spno,11
+mov %ypos,400
+gosub *regard_check
+csp 12
+mov %regard,%akiha_regard
+mov %spno,12
+mov %ypos,416
+gosub *regard_check
+csp 13
+mov %regard,%hisui_regard
+mov %spno,13
+mov %ypos,432
+gosub *regard_check
+csp 14
+mov %regard,%kohaku_regard
+mov %spno,14
+mov %ypos,448
+gosub *regard_check
+print nowaitdisp
+return
+
+*regard_check
+if %regard==0 mov $image,p0
+if %regard==1 mov $image,p1
+if %regard==2 mov $image,p2
+if %regard==3 mov $image,p3
+if %regard==4 mov $image,p4
+if %regard==5 mov $image,p5
+if %regard==6 mov $image,p6
+if %regard==7 mov $image,p7
+if %regard==8 mov $image,p8
+if %regard==9 mov $image,p9
+if %regard==10 mov $image,p10
+if %regard==11 mov $image,p11
+if %regard==12 mov $image,p12
+if %regard==13 mov $image,p13
+if %regard==14 mov $image,p14
+if %regard==15 mov $image,p15
+if %regard==16 mov $image,p16
+if %regard==17 mov $image,p17
+if %regard==18 mov $image,p18
+if %regard==19 mov $image,p19
+if %regard==20 mov $image,p20
+lsp %spno,$image,624,%ypos
+return
+
+;-------------------------------------------------------------------------------
+;	タイトルメニュー
+*title
+
+;CD-DA「メインテーマ」
+play "*8"
+
+*title_tochu
+
+if %clear_ark_true>=1 && %clear_ark_good>=1 && %clear_ciel_true>=1 && %clear_ciel_good>=1 && %clear_akiha_true>=1 && %clear_akiha_good>=1 && %clear_kohaku_true>=1 && %clear_hisui_true>=1 && %clear_hisui_good>=1 goto *title2
+
+;-------------------------------------------------------------------------------
+;	タイトルメニュー(通常)
+;goto *checks
+bg "image\title\title1.jpg",%type_crossfade_mid
+
+btndef "image\title\titlebtn1.jpg"
+btn 1,248,368,137,24,0,0
+btn 2,248,392,137,32,0,24
+btn 3,248,424,137,24,0,56
+
+btnwait %buttonno
+
+if %buttonno==0 skip -2
+if %buttonno==-1 skip -3
+
+if %buttonno==1 goto *gamestart_menu
+if %buttonno==2 gosub *option:mov %buttonno,0
+if %buttonno==3 playstop:bg #000000,crossfade_fst:end
+
+goto *title_tochu
+
+;-------------------------------------------------------------------------------
+;	タイトルメニュー(月蝕)
+*title2
+
+bg "image\title\title2.jpg",%type_crossfade_mid
+
+btndef "image\title\titlebtn2.jpg"
+btn 1,248,344,144,24,0,0
+btn 2,248,368,144,32,0,24
+btn 3,248,400,144,24,0,56
+btn 4,248,424,144,24,0,80
+
+btnwait %buttonno
+
+if %buttonno==0 skip -2
+if %buttonno==-1 skip -3
+
+if %buttonno==1 goto *gamestart_menu
+if %buttonno==2 goto *eclipse
+if %buttonno==3 gosub *option:mov %buttonno,0
+if %buttonno==4 playstop:bg #000000,crossfade_fst:end
+
+goto *title2
+
+
+;-------------------------------------------------------------------------------
+;ゲーム開始メニュー(画像は"image\gamestart"に)
+*gamestart_menu
+
+bg "image\gamestart\gamestart.jpg",%type_crossfade_mid
+
+btndef "image\gamestart\gamestartbtn.jpg"
+btn 1,216,264,200,32,0,0
+btn 2,216,296,200,40,0,32
+btn 3,216,336,200,40,0,72
+btn 4,216,376,200,32,0,112
+
+;入力待ち
+btnwait %buttonno
+
+if %buttonno==0 skip -2
+if %buttonno==-1 goto *title_tochu
+
+if %buttonno==1 playstop:bg #000000,crossfade_fst:gosub *openning:mov %buttonno,0
+if %buttonno==2 playstop:bg #000000,crossfade_fst:goto *f20
+if %buttonno==3 playstop:bg "image\gamestart\load.jpg",crossfade_mid:systemcall load
+if %buttonno==4 goto *title_tochu
+
+goto *gamestart_menu
+
+;-------------------------------------------------------------------------------
+;エンディングリスト(画像は"image\endlist"に)
+*endinglist
+
+;見たエンディングのタイトルを表示する
+if %clear_ark_true>0 lsp 30,"image\endlist\arktrue.jpg",24,88
+if %clear_ark_good>0 lsp 31,"image\endlist\arkgood.jpg",240,120
+if %clear_ciel_true>0 lsp 32,"image\endlist\cieltrue.jpg",104,160
+if %clear_ciel_good>0 lsp 33,"image\endlist\cielgood.jpg",200,200
+if %clear_akiha_true>0 lsp 34,"image\endlist\akihatrue.jpg",248,232
+if %clear_akiha_good>0 lsp 35,"image\endlist\akihagood.jpg",160,272
+if %clear_hisui_true>0 lsp 36,"image\endlist\hisuitrue.jpg",208,304
+if %clear_hisui_good>0 lsp 37,"image\endlist\hisuigood.jpg",80,344
+if %clear_kohaku_true>0 lsp 38,"image\endlist\kohakutrue.jpg",152,384
+
+bg "image\endlist\endlist.jpg",%type_crossfade_mid
+
+;戻るボタン
+btndef "image\endlist\return.jpg"
+btn 1,304,440,40,25,0,0
+
+;入力待ち
+btnwait %buttonno
+
+if %buttonno==0 skip -2
+
+;見たエンディングのタイトルを消去する
+csp -1
+
+;戻る
+return
+
+;-------------------------------------------------------------------------------
+;オプションメニュー(画像は"image\option"に)
+*option
+bg "image\option\option.jpg",%type_crossfade_mid
+
+btndef "image\option\optionbtn.jpg"
+btn 1,0,136,288,33,0,0
+btn 2,168,208,256,33,0,33
+btn 3,368,264,272,41,0,66
+btn 4,296,432,48,33,0,107
+
+;入力待ち
+btnwait %buttonno
+
+if %buttonno==0 skip -2
+if %buttonno==-1 return
+
+;各項目へ
+if %buttonno==1 gosub *gallery:mov %buttonno,0
+if %buttonno==2 gosub *endinglist:mov %buttonno,0
+if %buttonno==3 gosub *gameopt:mov %buttonno,0
+
+;「戻る」なら戻る
+if %buttonno==4 return
+
+goto *option
+
+;-------------------------------------------------------------------------------
+;ギャラリー(画像は"image\gallery"に、大きな画像は実際のものを使う)
+*gallery
+
+;翡翠ルートをクリアしていれば、ギャラリー２(翡翠と琥珀がバラバラ)へ
+if %clear_hisui>0 goto *gallery2
+
+*gallery1
+bg "image\gallery\gallery1.jpg",%type_crossfade_mid
+
+btndef "image\gallery\gallerybtn1.jpg"
+btn 1,72,16,296,201,0,217
+btn 2,16,160,184,217,0,0
+btn 3,248,264,264,201,0,418
+btn 4,416,48,184,201,0,619
+btn 5,32,432,40,33,0,820
+
+;入力待ち
+btnwait %buttonno
+
+if %buttonno==0 skip -2
+if %buttonno==-1 return
+
+if %buttonno==1 gosub *ark_gallery:mov %buttonno,0
+if %buttonno==2 gosub *akiha_gallery:mov %buttonno,0
+if %buttonno==3 gosub *hisui_gallery:mov %buttonno,0
+if %buttonno==4 gosub *ciel_gallery:mov %buttonno,0
+
+;「戻る」なら戻る
+if %buttonno==5 return
+
+goto *gallery1
+
+;翡翠と琥珀別々に選べるギャラリー
+*gallery2
+
+bg "image\gallery\gallery2.jpg",%type_crossfade_mid
+
+btndef "image\gallery\gallerybtn2.jpg"
+btn 1,72,16,296,201,0,217
+btn 2,144,264,240,201,0,619
+btn 3,16,160,184,217,0,0
+btn 4,416,48,184,201,0,418
+btn 5,384,264,240,201,0,820
+btn 6,32,432,40,33,0,1021
+
+;入力待ち
+btnwait %buttonno
+
+if %buttonno==0 skip -2
+if %buttonno==-1 return
+
+if %buttonno==1 gosub *ark_gallery:mov %buttonno,0
+if %buttonno==2 gosub *hisui_gallery:mov %buttonno,0
+if %buttonno==3 gosub *akiha_gallery:mov %buttonno,0
+if %buttonno==4 gosub *ciel_gallery:mov %buttonno,0
+if %buttonno==5 gosub *kohaku_gallery:mov %buttonno,0
+
+;「戻る」なら戻る
+if %buttonno==6 return
+
+goto *gallery2
+
+;-------------------------------------------------------------------------------
+;ゲーム設定(画像は"image\gameopt"に)
+*gameopt
+
+;ON/OFFを表示する
+if %effectskip==1 lsp 30,":c;image\gameopt\effectok.jpg",496,176
+if %sceneskip==1 lsp 31,":c;image\gameopt\sceneok.jpg",496,240
+
+bg "image\gameopt\gameopt.jpg",%type_crossfade_mid
+
+btndef "image\gameopt\gameoptbtn.jpg"
+btn 1,88,184,272,25,0,0
+btn 2,72,248,288,33,0,25
+btn 3,296,432,48,33,0,58
+
+;入力待ち
+btnwait %buttonno
+
+if %buttonno==0 skip -2
+
+;ONを消去しておく
+csp -1
+
+if %buttonno==-1 return
+
+;フラグの切り替え
+if %buttonno!=1 skip 3
+if %effectskip!=1 mov %effectskip,1:skip 2
+if %effectskip==1 mov %effectskip,0
+
+if %buttonno!=2 skip 3
+if %sceneskip!=1 mov %sceneskip,1:skip 2
+if %sceneskip==1 mov %sceneskip,0
+
+;エフェクト速度を設定する
+if %effectskip==1 gosub *velocity_effectspeed
+if %effectskip==0 gosub *normal_effectspeed
+
+;「戻る」なら戻る
+if %buttonno==3 return
+
+goto *gameopt
+
+;-------------------------------------------------------------------------------
+;エフェクト設定(通常速度)
+*normal_effectspeed
+mov %type_waitdisp,waitdisp
+mov %type_nowaitdisp,nowaitdisp
+mov %type_lshutter_fst,lshutter_fst
+mov %type_lshutter_mid,lshutter_mid
+mov %type_lshutter_slw,lshutter_slw
+mov %type_rshutter_fst,rshutter_fst
+mov %type_rshutter_mid,rshutter_mid
+mov %type_rshutter_slw,rshutter_slw
+mov %type_tshutter_fst,tshutter_fst
+mov %type_tshutter_mid,tshutter_mid
+mov %type_tshutter_slw,tshutter_slw
+mov %type_bshutter_fst,bshutter_fst
+mov %type_bshutter_mid,bshutter_mid
+mov %type_bshutter_slw,bshutter_slw
+mov %type_lcartain_fst,lcartain_fst
+mov %type_lcartain_mid,lcartain_mid
+mov %type_lcartain_slw,lcartain_slw
+mov %type_rcartain_fst,rcartain_fst
+mov %type_rcartain_mid,rcartain_mid
+mov %type_rcartain_slw,rcartain_slw
+mov %type_tcartain_fst,tcartain_fst
+mov %type_tcartain_mid,tcartain_mid
+mov %type_tcartain_slw,tcartain_slw
+mov %type_bcartain_fst,bcartain_fst
+mov %type_bcartain_mid,bcartain_mid
+mov %type_bcartain_slw,bcartain_slw
+mov %type_crossfade_fst,crossfade_fst
+mov %type_crossfade_mid,crossfade_mid
+mov %type_crossfade_slw,crossfade_slw
+mov %type_lscroll_fst,lscroll_fst
+mov %type_lscroll_mid,lscroll_mid
+mov %type_lscroll_slw,lscroll_slw
+mov %type_rscroll_fst,rscroll_fst
+mov %type_rscroll_mid,rscroll_mid
+mov %type_rscroll_slw,rscroll_slw
+mov %type_tscroll_fst,tscroll_fst
+mov %type_tscroll_mid,tscroll_mid
+mov %type_tscroll_slw,tscroll_slw
+mov %type_bscroll_fst,bscroll_fst
+mov %type_bscroll_mid,bscroll_mid
+mov %type_bscroll_slw,bscroll_slw
+mov %type_rmaskcross_fst,rmaskcross_fst
+mov %type_rmaskcross_mid,rmaskcross_mid
+mov %type_rmaskcross_slw,rmaskcross_slw
+mov %type_lmaskcross_fst,lmaskcross_fst
+mov %type_lmaskcross_mid,lmaskcross_mid
+mov %type_lmaskcross_slw,lmaskcross_slw
+windoweffect 10,300
+return
+
+;-------------------------------------------------------------------------------
+;エフェクト設定(高速度)
+*velocity_effectspeed
+mov %type_waitdisp,waitdisp
+mov %type_nowaitdisp,nowaitdisp
+mov %type_lshutter_fst,nowaitdisp
+mov %type_lshutter_mid,nowaitdisp
+mov %type_lshutter_slw,nowaitdisp
+mov %type_rshutter_fst,nowaitdisp
+mov %type_rshutter_mid,nowaitdisp
+mov %type_rshutter_slw,nowaitdisp
+mov %type_tshutter_fst,nowaitdisp
+mov %type_tshutter_mid,nowaitdisp
+mov %type_tshutter_slw,nowaitdisp
+mov %type_bshutter_fst,nowaitdisp
+mov %type_bshutter_mid,nowaitdisp
+mov %type_bshutter_slw,nowaitdisp
+mov %type_lcartain_fst,nowaitdisp
+mov %type_lcartain_mid,nowaitdisp
+mov %type_lcartain_slw,nowaitdisp
+mov %type_rcartain_fst,nowaitdisp
+mov %type_rcartain_mid,nowaitdisp
+mov %type_rcartain_slw,nowaitdisp
+mov %type_tcartain_fst,nowaitdisp
+mov %type_tcartain_mid,nowaitdisp
+mov %type_tcartain_slw,nowaitdisp
+mov %type_bcartain_fst,nowaitdisp
+mov %type_bcartain_mid,nowaitdisp
+mov %type_bcartain_slw,nowaitdisp
+mov %type_crossfade_fst,nowaitdisp
+mov %type_crossfade_mid,nowaitdisp
+mov %type_crossfade_slw,nowaitdisp
+mov %type_lscroll_fst,nowaitdisp
+mov %type_lscroll_mid,nowaitdisp
+mov %type_lscroll_slw,nowaitdisp
+mov %type_rscroll_fst,nowaitdisp
+mov %type_rscroll_mid,nowaitdisp
+mov %type_rscroll_slw,nowaitdisp
+mov %type_tscroll_fst,nowaitdisp
+mov %type_tscroll_mid,nowaitdisp
+mov %type_tscroll_slw,nowaitdisp
+mov %type_bscroll_fst,nowaitdisp
+mov %type_bscroll_mid,nowaitdisp
+mov %type_bscroll_slw,nowaitdisp
+mov %type_rmaskcross_fst,nowaitdisp
+mov %type_rmaskcross_mid,nowaitdisp
+mov %type_rmaskcross_slw,nowaitdisp
+mov %type_lmaskcross_fst,nowaitdisp
+mov %type_lmaskcross_mid,nowaitdisp
+mov %type_lmaskcross_slw,nowaitdisp
+windoweffect 1
+return
+
+;-------------------------------------------------------------------------------
+;各種サブルーチン
+
+
+;-------------------------------------------------------------------------------
+;	スクリプトブロック終了
+;-------------------------------------------------------------------------------
+
+;ブロック番号 130
+*s130
+
+
+; 学校 : 屋内 : 教室（朝）<瞬時表示>
+bg "image\bg\bg_06a.jpg",%type_nowaitdisp
+
+　まあ、うちの教室のまわりでクルクルまわっているということは、俺に用があるのかもしれない。
+br
+「……なんだろ。いつもは遠慮なく教室に入ってくるくせに」
+　それとも、ようやく三年生が二年生の教室にやってくることがわりと珍しいことだって気がついてくれたんだろうか。
+br
+「―――ないな。それだけは絶対にない」
+　うん、と納得して、とりあえず廊下に足を運んだ。\
+
+; 学校廊下2（朝）<左カーテン(速)>
+bg "image\bg\bg_11a.jpg",%type_lcartain_mid
+
+「先輩」
+; 中央<昼>=シエル:怒<左シャッター(速)>
+ld c,":a;image\tachi\cel_t08.jpg",%type_lshutter_fst
+「あれ―――遠野くん？」
+　呼びとめられて、先輩はなんだか驚いたように口をぽかん、とあけた。
+「なにしてるんだ。もうすぐ授業が始まるっていうのに、こんなところで油をうって」
+「―――――」
+　先輩は呆然と俺を眺めると、なんだか機嫌を害したみたいに視線を逸らす。\
+
+; 中央<昼>=シエル:拗ねる<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t12.jpg",%type_crossfade_fst
+「なにしてるんだって、そんなこと遠野くんには関係ありません」
+「いや――まあ、たしかに関係はないんだけど」
+「―――うそです。関係は、ちょっとぐらいあります」
+; 中央を消去<左シャッター(中)>
+cl c,%type_lshutter_mid
+
+
+　視線を逸らしているかと思ったら、先輩はくんくん、とこちらの匂いをかいだりする。
+「……あの、先輩……？」
+
+
+
+return
+
+;ブロック番号 131
+*s131
+
+; 学校 : 屋内 : 教室（朝）<瞬時表示>
+bg "image\bg\bg_06a.jpg",%type_nowaitdisp
+
+　廊下で誰かを探しているのか、先輩はうろうろと歩きまわっている。
+　……冷静に観察してみると、どうもうちの教室に用があってきたわけじゃなさそうだ。\
+
+「……相変わらずわかんない人だな。なにしてんだろ、あんなとこで」
+　椅子に座って先輩の行動を観察してみる。
+　先輩は廊下を歩いていく生徒たちをじーっと、見つめたり、腕を組んで物思いにふけったりしている。\
+
+「落とし物でもしたのかな、先輩」
+　……三年生である先輩が二年の廊下で落とし物をする、というのもヘンな話ではあるけど、校内を自由に闊歩しているあの人ならありえない話でもないだろう。
+br
+――――あれ？
+　なんか、先輩がうちの教室に入ってきた。
+　先輩はズンズンとこっちに向かって歩いてくる。\
+
+; 中央<昼>=シエル:怒<左シャッター(速)>
+ld c,":a;image\tachi\cel_t10a.jpg",%type_lshutter_fst
+
+「遠野くん！」
+「！」
+　と、いきなり怒鳴られた。
+「な、なんですか先輩。俺、先輩に目をつけられる悪さなんかしてないですけど」
+「いいわけ無用ですっ。いいから、ちょっと来てくださいっ」\
+
+; 黒画面<左シャッター(中)>
+bg "image\bg\ima_10.jpg",%type_lcartain_mid
+; 学校廊下2（朝）<左カーテン(中)>
+bg "image\bg\bg_11a.jpg",%type_lcartain_mid
+
+　ぐい、と腕を引っ張られて、強引に廊下に連れ出されてしまった。
+「ちょっ、ちょっと先輩、いきなりなんなんだよ。何か捜し物があったんじゃないの！？」
+; 中央<昼>=シエル:睨み01（睨んでます）<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t10a.jpg",%type_crossfade_fst
+「いいですから、そこでじっとしていてくださいっ！」
+
+; 中央を消去<左シャッター(中)>
+cl c,%type_lshutter_mid
+
+「……っ」
+　先輩の勢いにつられて、びしっと姿勢をただす。　と、先輩は昨日と同じようにくんくん、とこちらの匂いをかいだりする。
+「……あの、先輩……？」\
+
+
+
+return
+
+;ブロック番号 132
+*s132
+
+; 学校 : 屋内 : 教室（朝）<瞬時表示>
+bg "image\bg\bg_06a.jpg",%type_nowaitdisp
+
+　……先輩は廊下できょろきょろとあたりを見渡している。
+　捜し物をしているのか捜し人がいるのか知らないけど、挙動不審なことこの上ない。
+br
+「………ふ、ふふ、ふ」
+　なんか、むらっときた。
+　いつも先輩のペースに振りまわされているこっちとしては、たまに逆襲してやらないとバランスがとれないってものだろう。\
+
+; 黒画面<左カーテン(速)>
+bg "image\bg\ima_10.jpg",%type_lcartain_mid
+; 学校廊下2（朝）<左カーテン(速)>
+bg "image\bg\bg_11a.jpg",%type_lcartain_mid
+
+　先輩は真剣に何かを捜している。
+　その背後に回りこむ。
+　……さいわい、先輩は気がついていない。
+　せーの、
+br
+「わっ！」
+「――――っ！」
+　と、後から抱きついた、んだけ、ど―――
+
+;S.E."倒れる音"
+wave se4
+
+quakex 4,375
+
+
+; 中央<昼>=シエル:睨み01（睨んでます）<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t06a.jpg",%type_crossfade_fst
+　……いつのまにか、俺一人でかってに廊下に転んでいた。\
+; 中央を消去<クロスフェード(速)>
+cl c,%type_crossfade_fst
+「あ―――遠野、くん？」
+　こっちを気遣う先輩の声。
+「うん、俺です先輩」
+; 中央<昼>=シエル:睨み01（睨んでます）<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t08.jpg",%type_crossfade_fst
+「もう、いきなりびっくりしたじゃないですか。つい条件反射で逃げちゃいましたけど、大丈夫ですか？」
+「え？　あ、大丈夫だよ、かってに転んだだけだから」
+　立ちあがる。
+　……周囲の生徒から奇異の目で見られるのは、まあ仕方がないことだろう。\
+
+「いたたた……やば、腰をうったみたいだ。やっぱりイタズラなんて慣れない事はするんじゃなかったか」
+　反省。
+「そのとおりです。わたしもやりすぎちゃいましたけど、今回は遠野くんが悪いんですから謝りませんからね」
+「あー、わかってるわかってる。ごめんな先輩、捜し物の邪魔して。それじゃいたずら坊主は自分の教室に戻ります」
+
+　腰をさすりながら教室に戻ろうと歩き出す。
+
+; 中央<昼>=シエル:睨み01（睨んでます）<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t01a.jpg",%type_crossfade_fst
+
+「あ、待って遠野くん。今の罰としてちょっとそこに起立してくれますか？」\
+
+「？」
+　今の罰に起立しろって、またヘンな事を言い出す人だ。
+「いいですけど……なに？」
+「いいから動かないでください」
+
+; 中央を消去<左シャッター(中)>
+cl c,%type_lshutter_mid
+
+　と、先輩は昨日と同じように、またしてもくんくん、とこちらの匂いをかいだりする。
+「……あの、先輩……？」
+
+
+
+return
+
+;ブロック番号 133
+*s133
+
+; 学校 : 屋内 : 学校廊下1（朝)<瞬時表示>
+bg "image\bg\bg_11a.jpg",%type_nowaitdisp
+
+; 中央<昼>=シエル:楽03（正面・少し照れている）<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t03.jpg",%type_crossfade_fst
+「遠野くん、昨日はよく眠れました？」
+「え？」
+　先輩はまっすぐな目をして、そんなことを聞いてくる。
+; 中央を消去<クロスフェード(速)>
+cl c,%type_crossfade_fst
+
+
+　……よく眠れたかなんて、そんな事言うまでもない。昨夜は寝つけなかったし、なにより―――\
+
+「うっ……」
+　鮮明に昨夜の記憶が思い出されて、顔が赤くなっていくのがわかる。
+　そんな俺を、先輩は上目遣いでじーーっと見つめる。
+「先輩、その―――」
+; 中央<昼>=シエル:楽03（正面・少し照れている）<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t08.jpg",%type_crossfade_fst
+「遠野くんのえっち」
+「はい？」
+; 中央を消去<左シャッター(中)>
+cl c,%type_lshutter_mid
+
+　何か文句がありそうな眼差しをして、先輩はとことこと俺の前から去っていってしまった。\
+
+; 黒画面<クロスフェード(中)>
+bg "image\bg\ima_10.jpg",%type_crossfade_mid
+!w1000
+
+
+return
+
+;ブロック番号 134
+*s134
+
+; 学校 : 屋内 : 学校廊下1（朝)<瞬時表示>
+bg "image\bg\bg_11a.jpg",%type_nowaitdisp
+
+; 中央<昼>=シエル:睨み02（まじめな顔）<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t07a.jpg",%type_crossfade_fst
+
+
+「―――――あ」
+　真っ正面から見られると、その―――昨夜の夢を、思い出してしまう。
+「遠野くん？　どうしたんですか、顔が赤いですよ」
+「い、いや、なんでもない。ちょっと、その、今朝は夢見が悪くてさ。気分がよろしくないんだ」
+　悪くない、と言わないあたり、自分は正直ものだと思う。\
+
+「………遠野くん？」
+　先輩は深刻な顔のまま、じっと俺を見つめている。
+「……先輩……？」
+　少し戸惑う。なんだか、先輩に心を読まれているような気がして、ますます昨夜の夢を思い出してしまう。
+
+
+; 中央<昼>=シエル:とぼける<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t12.jpg",%type_crossfade_fst
+
+
+「遠野くん、いま夢見がよくなかったって言いましたよね。それってどういう意味ですか？」
+「どういう意味も何も、別に先輩には関係ないっ。俺の夢の話なんていいから、俺は先輩が何してるのかって聞いてるんだって」\
+
+
+; 中央<昼>=シエル:怒<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t08.jpg",%type_crossfade_fst
+
+
+「関係ありますっ！　遠野くん、昨日はよく眠れなかったんじゃないですか？」
+「――――え？」
+　いや、それは―――たしかに、その通りなんだけど。
+「……先輩、どうしてそんなコトわかるの？」
+
+
+; 中央<昼>=シエル:とぼける<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t12.jpg",%type_crossfade_fst
+
+
+「だって、遠野くん顔が真っ赤じゃないですか。どんな病気かは知りませんけど、体調が悪そうです」
+「あ―――そうゆうコト」
+　一瞬、すごくドッキリした。
+　先輩が昨夜の事を言い当てるものだから、まさかとは思うんだけど、てっきり―――\
+
+
+; 中央<昼>=シエル:睨み02（まじめな顔）<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t07a.jpg",%type_crossfade_fst
+
+
+「それより遠野くんの夢の話です。どんな夢を見たんですか、聞かせてください」
+　……諦めてなかったのか、先輩はまたそんなコトを聞いてくる。
+「……もう。本当に大したコトじゃないよ。ただ……その、先輩が、ちょっと出てきただけ……だし」
+br
+　ぼそぼそと返答する。
+br
+　とたん。
+
+; 中央<昼>=シエル:拗ねる<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t10d.jpg",%type_crossfade_fst
+
+
+「わ、わたしが出てきたんですかっ！？」
+　先輩は、今までで一番、わかりやすく怒ってしまった。\
+
+「あの……先輩？」
+
+; 中央<昼>=シエル:怒<クロスフェード(速)>
+ld c,":a;image\tachi\cel_t09b.jpg",%type_crossfade_fst
+
+
+「……………………」
+　先輩はサッと俺から一歩引くと、じっ、と上目遣いで俺を見つめてくる。
+「……………」
+
+; 中央を消去<左シャッター(中)>
+cl c,%type_lshutter_mid
+
+
+
+　先輩は何か言いたそうな顔をしたあと、ペコリ、とおじぎをして走り去ってしまった。\
+
+「………？」
+　はて、と首をかしげる。
+　直後、ホームルーム開始を告げる予鈴が鳴り響いた。\
+; 黒画面<クロスフェード(中)>
+bg "image\bg\ima_10.jpg",%type_crossfade_mid
+!w1000
+
+
+
+return
+
+;ブロック番号 135
+*s135
+
+
+
+; 教室（朝）<クロスフェード(中)>
+bg "image\bg\bg_06a.jpg",%type_crossfade_mid
+;S.E."予鈴"
+wave se2
+
+
+　昼休みになったとたん、今まで授業に一時間も出てなかった男がやってきた。
+; 中央<昼>=有彦:通常<左シャッター(速)>
+ld c,":a;image\tachi\ari_t05.jpg",%type_lshutter_fst
+
+「よう！　メシ食おうぜ、メシ！」
+　何が嬉しいのか、有彦はとにかく威勢がいい。
+「そりゃあメシは当然のように食べるけど、えらく機嫌がいいじゃないか。なにかあったのか、有彦」
+「おう。ついさっきそこで先輩に昼メシいっしょにどうっすかって声をかけたらさ、断られたんだ」
+「………………」
+　不思議だ。
+　先輩っていうとシエル先輩のことだろうけど、誘いを断られると嬉しいらしい、この友人は。\
+
+「あのさ。有彦、そういう趣味だったっけ」
+; 中央<昼>=有彦:笑い<クロスフェード(速)>
+ld c,":a;image\tachi\ari_t02.jpg",%type_crossfade_fst
+
+「いやいや、話は最後まで聞けって。でな、先輩にどうしてダメなんだよう、って聞いたら『遠野くんが一緒だと、イヤです』だってさ！　うわははははははははは！　愉快だろう、遠野！」
+「………………」
+　不思議だ。
+　どうして、俺はこうゆう友達甲斐のない男と、中学時代から友人だったりするんだろう？\
+
+「いやあ、嫌われたもんだな遠野！　ライバルが減って嬉しいので、今日の昼メシはオレがおごってやろう！」
+　ばんばん、とオレの背中を楽しそうに叩く有彦。
+「……そっか。先輩、まだ朝のこと怒ってるのか」
+　どうして怒られるのかまったく覚えはないのだけど、たしかに先輩は怒っていたように見えた。
+; 中央<昼>=有彦:笑い<クロスフェード(速)>
+ld c,":a;image\tachi\ari_t01.jpg",%type_crossfade_fst
+
+「ほら、行くぞ遠野。食堂の席は利用客の半分しかないんだからな」
+　ずるずる、と有彦は人の腕を強引に引きずっていく。\
+
+; 黒画面<左カーテン(中)>
+bg "image\bg\ima_10.jpg",%type_lcartain_mid
+; 学校食堂<クロスフェード(中)>
+bg "image\bg\bg_50.jpg",%type_lcartain_mid
+
+
+　有彦と席を並べて昼食をとる。
+　うちの学校の食堂にはテレビが置かれていて、その日の朝のニュースをビデオで流す、という教育にいいんだか悪いんだか紙一重のことをやっている。
+br
+　とりあえず、いま流れているニュースはコンビニエンスストアで酔っ払い客が店員を刺殺した、という、とりあえずむこう三日間ぐらいはコンビニに行きたくなくなるような内容だった。\
+
+; 中央<昼>=有彦:笑い<クロスフェード(速)>
+ld c,":a;image\tachi\ari_t01.jpg",%type_crossfade_fst
+
+「ぶっそうな世の中だねえ。無差別に人を殺してる通り魔はいるわ、酔っ払いは人を刺すわ。こんなんじゃ安心して夜遊びもできねえってもんだよな、ほんと」
+　有彦は、わりと真剣にニュースを見ているようだった。\
+
+「……まあ、たしかに物騒だけど。とりあえず通り魔事件はもう起きないんだから、いつも通りっていうことじゃないのか」
+「そなの？　通り魔って捕まったんだ？」
+「いや、捕まってはいないだろうけど」
+br
+―――とりあえず、もうこの世にはいないのだ。
+　だから現代の吸血鬼なんていう俗な見出しがテレビに映ることもないし、もう、意味もなく殺される『誰か』がでることもない。\
+
+「ともかく、もうあんなふざけた事件は起きないし、犠牲者もでないってこと。この街もようやく元に戻ったんだよ」
+; 中央<昼>=有彦:笑い<クロスフェード(速)>
+ld c,":a;image\tachi\ari_t04.jpg",%type_crossfade_fst
+
+「いや―――犠牲者は出ると思うぜ、遠野」
+「―――む。なんで断言できるんだよ、有彦」
+「だって、ほら。今朝で十人目の死体が発見されたって、いまニュースで流れてるもん」
+br
+―――――え？
+br
+「うわっ、マジかよ……。いつも行ってる映画館の裏じゃんか、あそこ」\
+
+「ちょっ――――ちょっと、待て」
+　有彦を押しのけてテレビを見る。
+　そこには、たしかに。
+　昨夜、通り魔殺人による十人目の犠牲者が出た、というニュースがたれ流されていた。
+
+;CD-DA停止
+playstop
+
+「そんな―――ばかな」
+　あいつは。ネロは、たしかに死んだ。
+　なのにどうして―――体内の血液が大量に搾取されている死体、なんてものが出てくるっていうんだ。\
+
+; 中央<昼>=有彦:笑い<クロスフェード(速)>
+ld c,":a;image\tachi\ari_t01.jpg",%type_crossfade_fst
+
+「現代の吸血鬼ねえ。どんなもんか知らないけど、相手が美人のお姉さんだっていうんなら吸われてやってもいいかもな、うむ」
+「―――――」
+br
+　美人のお姉さんなら、吸われてやってもいい。
+br
+　有彦のくだらない戯言は、たしかに―――まあ、的を射ているのかもしれない。
+br
+「―――まさか」
+　考えたくはないけれど。
+　ネロがいなくなっても、吸血鬼は、まだ一人残っているじゃないか、志貴――――。\
+
+; 黒画面<クロスフェード(中)>
+bg "image\bg\ima_10.jpg",%type_crossfade_mid
+; 教室（夕）<クロスフェード(中)>
+bg "image\bg\bg_06a.jpg",%type_crossfade_mid
+
+　授業が終わって、放課後になった。
+　いや、いつのまにか放課後になっていた、というのが正しいだろう。
+　悪い考えばかりが頭の中をかけまわって、気がつけばまわりには誰もいなくなっていたんだから。\
+
+「―――通り魔殺人は、まだ続いている」
+　それがどういう意味なのか、解らない。
+　答えを知っているのは、きっとアルクェイド本人だけだ。
+br
+　わからない。
+　もう、あんな事件は遠野志貴とは無関係だ。
+　俺はネロと決着をつけた時点でこっち側に戻ってきた。
+　なら―――自分から好き好んで、あんな異常な世界に足を踏み入れるなんて気が狂っているとしか思えない。\
+
+「もう――――関わるべきじゃない」
+br
+　そんな事、口に出すまでもなく理解している。
+　たぶんそれが最後から二番目ぐらいに正しい選択だ。
+　けれど、遠野志貴は一番目の選択を、ずっとむかしに教えられている。\
+br
+br
+br
+br
+br
+―――志貴、どんな人間だって人生っていうのは落とし穴だらけなのよ。
+　君は人よりそれをなんとかできる力があるんだから、もっとシャンとしなくちゃね――――
+!w750
+
+\
+「――――」
+　だから、見て見ぬふりだけは出来ない。
+　事件はまだ終わっていない。
+　一度関わってしまった以上、遠野志貴は最後までこの厄介ごとに付き合わなくちゃいけないらしい――\
+
+; 黒画面<左カーテン(中)>
+bg "image\bg\ima_10.jpg",%type_lcartain_mid
+; 交差点（夕）<左カーテン(中)>
+bg "image\bg\bg_24a.jpg",%type_lcartain_mid
+
+
+　学校を出た。
+　とりあえず、アルクェイドのマンションに行ってみよう。
+br
+
+; 通学路（夕方）<左カーテン(速)>
+bg "image\bg\bg_23a.jpg",%type_lcartain_mid
+; アルクマンション入り口（昼）<左カーテン(速)>
+bg "image\bg\bg_12a.jpg",%type_lcartain_mid
+; アルクマンション（昼）<左カーテン(速)>
+bg "image\bg\bg_13a.jpg",%type_lcartain_mid
+
+; アルクマンション・台所（朝）<クロスフェード(中)>
+bg "image\bg\bg_14a.jpg",%type_crossfade_mid
+; アルクマンション・部屋（朝）<クロスフェード(中)>
+bg "image\bg\bg_15c.jpg",%type_crossfade_mid
+
+; アルクマンション入り口（昼）<左カーテン(速)>
+bg "image\bg\bg_12a.jpg",%type_lcartain_mid
+
+　マンションの部屋はそのままだったけれど、アルクェイドの姿はなかった。
+　……まあ、簡単にあいつが掴まるとは思っていない。街に出て、手当たりしだいに捜すしかないだろう。\
+
+; 黒画面<クロスフェード(中)>
+bg "image\bg\ima_10.jpg",%type_crossfade_mid
+!w3000
+
+
+; 街・映画館前（夜）<左カーテン(中)>
+bg "image\bg\bg_25b.jpg",%type_lcartain_mid
+
+　日が沈んで、街はそろそろ本格的に夜を迎えようとしている。
+　街の主だったところを探し回ってはみたものの、アルクェイドの姿は片鱗さえ見つからなかった。\
+
+「―――くそ。どうでもいい時はひょこひょこ歩いてたくせに、どうしてこういう時に見つからないんだ、あいつは」
+　……どうするか。
+　夜はまだ始まったばかりだし、ここは―――
+br
+
+
+
+
+
+return
+
+;ブロック番号 136
+*s136
+
+
+; 黒画面<左カーテン(中)>
+bg "image\bg\ima_10.jpg",%type_lcartain_mid
+
+
+; 屋敷玄関（夜）<左カーテン(遅)>
+bg "image\bg\bg_32c.jpg",%type_lcartain_slw
+
+　屋敷の門は静まり返っている。
+　時刻は夜の七時。
+　そろそろ秋葉も帰ってきて、居間で紅茶でも飲んでいる頃だろう。\
+
+「…………はぁ」
+　のんびり夕食なんて食べている気分じゃないけど、また屋敷に帰らずにいたら秋葉たちを心配させてしまう。
+　アルクェイドを捜すのは夕食が終わって、秋葉たちが寝静まった後にしよう。\
+
+; 黒画面<左カーテン(遅)>
+bg "image\bg\ima_10.jpg",%type_lcartain_slw
+!w1000
+
+; 志貴の部屋（夜）<左カーテン(中)>
+bg "image\bg\bg_40c.jpg",%type_lcartain_slw
+
+―――秋葉との夕食が終わって、部屋に戻ってきた。
+　食後に琥珀さんたちと居間でお茶も飲んでいたが、あいにくと何をしていたのかは記憶にない。
+br
+「―――どこにいってるんだろう、アイツは」
+　頭の中にあるのは金髪の吸血鬼のことだけだったからだ。\
+
+; 黒画面<左カーテン(遅)>
+bg "image\bg\ima_10.jpg",%type_lcartain_slw
+; 屋敷玄関（夜）<左カーテン(遅)>
+bg "image\bg\bg_32c.jpg",%type_lcartain_slw
+
+　十時になって、屋敷の電気が落ちた。
+　就寝時間になってみんなが部屋に引きこんだあと、見付からないように屋敷を抜け出した。\
+
+「……いるとしたら街、か」
+　……考えたくないが、吸血鬼事件の犠牲者はたいてい路地裏で発見される。
+　アルクェイドを―――まだ続いている吸血鬼殺人の犯人を捜すのなら、街を中心に探しまわるしかないだろう。\
+
+; 黒画面<左カーテン(遅)>
+bg "image\bg\ima_10.jpg",%type_lcartain_slw
+!w1000
+
+; 街・繁華街（夜）<左カーテン(中)>
+bg "image\bg\bg_26a.jpg",%type_lcartain_mid
+
+「――――――はあ」
+　どさり、とガードレールに腰を下ろす。
+　あれから数時間。
+　あてもなく探しまわってみたはいいが、アルクェイドの姿は影も形も見当たらない。\
+
+「…………くそ」
+　すごく、悔しい。
+　そりゃあ街の中でなんのアテもなく人を見つけ出すのがどれだけ困難かわかってはいたけど、アイツにかぎってはあっさりと見付かるって、心のどこかで楽観していた。
+br
+「どこいったんだよ、アイツ……」
+　……どうしてだろう。
+　別にアイツには吸血鬼殺人の話を聞くだけなのに、会えないとわかると、ひどく―――\
+
+「ああ、やめやめ。こんなのはもう止めだ」
+　ガードレールから立ちあがって歩き出す。
+　いいかげん時刻も午前零時になろうとしている。　これ以上はアルクェイドを捜す、なんていう無駄な事はやっていられない。
+「……………」
+　でもまあ、ここまできたらもう少しだけ。
+　最後にもう一箇所だけ様子を見てみて、それで見付からなかったら屋敷に帰ろう。\
+
+; 黒画面<左カーテン(中)>
+bg "image\bg\ima_10.jpg",%type_lcartain_mid
+; 公園入り口（夜）<左カーテン(中)>
+bg "image\bg\bg_27b.jpg",%type_lcartain_mid
+
+　……人気のない公園。
+　あの夜、アルクェイドに協力して、ネロという吸血鬼を倒した場所にやってきた。
+　街を捜してばかりいたから、今夜はここには立ち寄っていない。
+「……まあ、見付かりっこないんだけど……」
+　ぼやいて、公園の中へ足を踏み入れる。\
+
+; 公園Ａ（夜）<左カーテン(中)>
+bg "image\bg\bg_28b.jpg",%type_lcartain_mid
+
+　夜の十二時。
+　さすがにこの時間になると、公園に人気はない。　ここまで誰もいないと、逆にさっぱりとするぐらいだ。\
+
+「……そうだよな。そう都合よく見付かるはずなんてなかった」
+　はあ、と両肩を落とす。
+「………バカだな。なにがっかりしてるんだろ、俺」
+　自分でもわからない。
+　ただ、もう一度ぐらい―――アイツの笑顔とか、見ておきたかったのかも、しれない。\
+
+; 中央<夜>=アルクェイド:喜01（基本的笑顔）<左シャッター(中)>
+ld c,":a;image\tachi\ark_t08.jpg",%type_lshutter_fst
+「あ、いたいた。こんばんは、志貴」
+br
+　……そう、こんなふうに、吸血鬼なんて信じられないぐらいの気軽さで話しかけてくるアイツの顔を――――
+br
+「ア、	アルクェイド―――！？」
+　思わず。そのまま、アルクェイドの両肩を掴まえていた。
+; 中央<夜>=アルクェイド:驚き01（大きな驚き）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t12.jpg",%type_crossfade_fst
+「えっ―――」　
+　びくっ、と驚くアルクェイド。
+　掴まえたアルクェイドの肩は確かに現実で、あわてて両手を離す。
+; 中央を消去<クロスフェード(中)>
+cl c,%type_crossfade_fst
+\
+
+「お、おまえ、なんで――――」
+　ずっと捜していた相手が目の前にいるっていうのに、混乱した俺の頭はそんな事しか喋らせてくれない。
+; 中央<夜>=アルクェイド:驚き01（大きな驚き）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t03.jpg",%type_crossfade_fst
+「なんでって、おかしいかな。志貴のことを捜してたんだから、こうして会うのは偶然じゃないと思うけど」
+「え―――俺を捜してたって、なんで？」
+; 中央<夜>=アルクェイド:驚き01（大きな驚き）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t06.jpg",%type_crossfade_fst
+「なんでって―――別に理由なんてないけど」
+　きっぱりと、理由のない事を堂々と言いきるアルクェイド。\
+
+「……………」
+　……忘れてた。コイツは、そういう猫みたいなヤツだったんだっけ。
+「……まあ、ちょうど良かった。実をいうとさ、俺もアルクェイドに会いたかったんだ。ここで会えて、その――――」
+　本当に嬉しい、なんて言いそうになって、慌てて言葉を飲む。\
+
+「―――ともかくだ、真剣に話たいことがある。ここじゃ落ち着かないから場所を変えたいんだけど、いいか？」
+「いいけど―――話ってなによ」
+「すぐにわかる。……もう少し奥のほうに移動しよう」
+　行くよ、と声をかけて歩き始める。
+; 中央を消去<左シャッター(遅)>
+cl c,%type_lshutter_mid
+　アルクェイドは首をかしげながら、大人しくこちらの後についてくる。\
+
+; 黒画面<左カーテン(中)>
+bg "image\bg\ima_10.jpg",%type_lcartain_mid
+
+
+
+return
+
+;ブロック番号 137
+*s137
+
+
+; 屋敷玄関（夜）<クロスフェード(中)>
+bg "image\bg\bg_32c.jpg",%type_crossfade_mid
+
+　屋敷の門は静まり返っている。
+　時刻は夜の七時。
+　そろそろ秋葉も帰ってきて、居間で紅茶でも飲んでいる頃だろう。\
+
+; 黒画面<左シャッター(中)>
+bg "image\bg\ima_10.jpg",%type_lshutter_mid
+; 屋敷玄関（朝）<左シャッター(中)>
+bg "image\bg\bg_48c.jpg",%type_lshutter_mid
+
+
+　……？
+　なんだろう、居間のほうから話し声が聞こえてくる。そろそろ夕食の時間だろうから、話し声がするのはおかしい。
+　琥珀さんは厨房、翡翠は秋葉と会話をするようなキャラクターではないと思う。
+br
+「……琥珀さんと秋葉がお茶でも飲んでるのかな」　ま、おそらくはそんなところだろう。
+　とりあえず、屋敷の玄関を押しあけた。\
+
+; 屋敷ロビー（夜）<左カーテン(速)>
+bg "image\bg\bg_33c.jpg",%type_lcartain_mid
+; 中央<夜>=翡翠:楽01（無表情な楽）<瞬時表示>
+ld c,":a;image\tachi\his_t01.jpg",%type_nowaitdisp
+
+　ロビーには翡翠が立っていた。
+「遅くなったけど、ただいま」
+「………………」
+　翡翠は無表情で俺を見据えている。
+　いつもの「おかえりなさいませ」という言葉もなくて、なんだか不機嫌そうだ。\
+
+「何かあったの？　気のせいか怒っているように見えるんだけど」
+; 中央<夜>=翡翠:嫌悪<クロスフェード(速)>
+ld c,":a;image\tachi\his_t08.jpg",%type_crossfade_fst
+
+「……志貴さまにお客さまです。先ほどから居間のほうでお待ちですので、どうぞお急ぎください」
+「俺に客？」
+　はい、と翡翠はうなずく。\
+
+「誰だろう、俺を訪ねにくるやつなんて一人もいないんだけど────」
+br
+　いや、まて。
+　なにか、とても悪い予感がする。
+br
+「翡翠。それ、どんなヤツ……？」
+「金色の髪をした、綺麗な女の方です」
+　翡翠の返答は実に率直だ。
+　無言で居間へと駆け出した。\
+
+; 黒画面<左カーテン(速)>
+bg "image\bg\ima_10.jpg",%type_lcartain_fst
+; 屋敷居間（夜）<左カーテン(速)>
+bg "image\bg\bg_34b.jpg",%type_lcartain_fst
+
+;CD-DA「学校・昼」
+play "*3"
+
+
+────遅かった。
+　事態は、もう誤魔化しようのない展開を迎えてしまっている真っ最中だったらしい。\
+
+; アルクェイド : 通常 : 秋葉とアルク<上シャッター(中)>
+bg "image\event\ark_e08.jpg",%type_tshutter_mid
+
+「────お帰りなさい、兄さん」
+「あ、やっと帰ってきたな、こいつめ」
+
+　二人はまったく正反対の様子で、やってきた俺に声をかけてきた。
+「……………………」
+　なんて、コトだ。
+　よりにもよって、アルクェイドと秋葉が向かい合ってうちの居間で対峙してしまっている。\
+
+　アルクェイドは平然としていて、秋葉も同じように平然と座っている。
+　けれどあくまで自然……というか天然のアルクェイドと違って、秋葉の平然とした態度はアルクェイドに対する敵視の裏返しなのがみえみえだった。
+　ちらり、と秋葉が俺のコトを流し見る。\
+
+
+「どうしたんですか兄さん。そんなところで立っていないで、どうぞこちらに来て座ってください」
+br
+　うう、いったらそのままナイフでトスっと刺されそうな気がする。
+br
+「いや、いいんだ。それより秋葉、こいつはだな、その────」
+　その────なんて説明すればいいんだろう？
+　学校のクラスメイトだなんてのは通用しないし、街で知り合ったなんていうのは火に油を注ぐようなものだと思う。\
+
+「その、なんですか？」
+「いや、だからだな、えっと────」
+br
+　ええい、こうなってしまってはもう何を言っても無駄な気がするけど、とにかくうまい言い訳をして誤魔化さなくてはいけない。
+　いけないんだけど────そもそもアルクェイドはなんて言ってここまでやってきたんだろう？
+br
+「えっと───コイツ、なんて言ってやってきたの？」
+
+　アルクェイドを指差して、俺は自爆した。\
+
+
+「ん？」
+　アルクェイドは不思議そうに首をかしげている。
+
+「……兄さんのご友人ではないんですか？　この方はそうおっしゃいましたが」
+「ああ───うん、友人といえば、友人」
+
+「そうですか。私にもご紹介していただけると嬉しいわ。兄さんのご友人でしたら、無下にお帰りいただくわけにはいきませんし」
+「あの───それはですね、秋葉さん」
+　ムニャムニャと言葉を濁す俺。
+　と、ずっと黙っていて我慢できなくなったのか、アルクェイドが兄妹水入らずの会話に断りもなく割って入ってきやがった。\
+
+
+「どうぞおかまいなく。わたしは志貴を誘いにきただけだから、すぐに出掛けるわ。ね、そうでしょ志貴？」
+　くらっ。
+br
+ ───まずい。
+　これ以上こいつに喋らせては、遠野志貴の身の破滅だ。\
+
+「ふふ、あははははは！」
+　やけくそ気味に笑いながらアルクェイドに走りよって腕を掴む。
+
+bg "image\bg\bg_34b.jpg",%type_lshutter_mid
+
+; 左<夜>=アルクェイド:楽03（髪を掻き揚げている）<クロスフェード(速)>
+ld l,":a;image\tachi\ark_t06.jpg",%type_crossfade_fst
+
+「ちょっと志貴、急になにするのよ」
+　アルクェイドの文句を聞いている余裕はない。
+; 左を消去<左シャッター(速)>
+cl l,%type_lshutter_fst
+
+　俺はアルクェイドの腕をひっぱって、呆然としている秋葉を残して居間から飛び出した。\
+
+; 黒画面<左カーテン(速)>
+bg "image\bg\ima_10.jpg",%type_lcartain_fst
+
+; 屋敷ロビー（夜）<左カーテン(速)>
+bg "image\bg\bg_33c.jpg",%type_lcartain_fst
+; 中央<夜>=翡翠:楽01（無表情な楽）<瞬時表示>
+ld c,":a;image\tachi\his_t01.jpg",%type_nowaitdisp
+
+　ロビーには翡翠がいる。
+　翡翠はアルクェイドを引っ張って走ってくる俺を、いつも以上に冷たい目で見つめてくる。
+br
+「お出かけですか、志貴さま」
+「―――ああ、帰りは遅くなる。その、すっごく申し訳ないんだけど、屋敷の門は開けといてほしい」
+「―――はい、かしこまりました」
+　慇懃におじぎをする翡翠の横を駆け抜けて、逃げるように屋敷から外に出た。\
+
+; 黒画面<左カーテン(速)>
+bg "image\bg\ima_10.jpg",%type_lcartain_fst
+
+; 屋敷玄関（夜）<左カーテン(速)>
+bg "image\bg\bg_32c.jpg",%type_lcartain_fst
+
+; 中央<夜>=アルクェイド:不満（不満そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t11.jpg",%type_crossfade_fst
+
+「いったいなあ。いったいなんのつもりよ、いきなり外に連れ出すなんて」
+「それはこっちの台詞だろ……！　おまえな、一体なんのつもりなんだよ。真正面からうちの屋敷にやって来るなんて正気じゃないぞ！
+　もしかして俺の生活をぶっ壊すつもりなのか、このばか女……！」
+　ぎり、と歯を軋ませながらアルクェイドを睨みつける。
+; 中央<夜>=アルクェイド:不満（不満そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t13.jpg",%type_crossfade_fst
+
+「ばっ───ばか女って、貴方わたしを罵迦にしてるの！？」\
+
+「ばかをばかって言ってんだから、それ以外なにがあるっていうんだばか！　何か反論があったら聞いてやるから言ってみろ！」
+「え───あ、う？」
+　とにかくもう、完全に頭にきた。
+　こんなに頭にきたのは久しぶりで、怒ったからには相手がなんであれ真っ正面から文句を言わなくちゃ気が済まない。\
+
+; 中央<夜>=アルクェイド:不満（不満そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t16.jpg",%type_crossfade_fst
+
+「なによ、わたしは志貴に会いに来ただけじゃない。そんなに怒られるようなコトはしてないわ！」
+「……ちょっと待て。会いにきただけって、アルクェイド、おまえ本気で言ってるのか」
+; 中央<夜>=アルクェイド:不満（不満そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t14.jpg",%type_crossfade_fst
+
+「だって、わたし別におかしなコトは言ってないわ。志貴の妹さんには志貴の目のことも、わたしのコトもちゃんと黙っててあげてたんだから」
+「そんなのは当然だ。そんな事まで口にしてたらこうして話なんかしてない。ためらわずにあの場で屋敷の外にほうりだしてた」\
+
+; 中央<夜>=アルクェイド:不満（不満そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t11.jpg",%type_crossfade_fst
+
+「……わっかんないなあ。それじゃなんでそんなに怒ってるのよ、貴方は」
+「そっちがあんまりにも考えなしだからだろっ！
+　いいか、おまえは居るだけで目立つんだ。この際だから言っておくけど、おまえはもう少し自分が厄介な存在なんだって気がついたほうがいいぞ……！」
+　と、とりあえず言いたい事を全部口にした。
+　そうなるとスッキリとして冷静になれるのだけど、言われたい放題のアルクェイドは当然のようにスッキリしない。
+　アルクェイドは猫のようにむーっと、不機嫌そうに睨んでくる。\
+
+; 中央<夜>=アルクェイド:不満（不満そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t16.jpg",%type_crossfade_fst
+
+「―――なによ、かってなことばっかり言って。だいたい居るだけで目立つってどうしてよ。わたし、外見は人間と変わらないでしょう？」
+「だから、美人は居るだけで目立つものなんだって。人間であるかどうかなんて関係ない」
+　きっぱりと言い返す。
+
+; 中央を消去<クロスフェード(速)>
+cl c,%type_crossfade_fst
+
+
+br
+　あんまりにあっさりした返答だったからか、アルクェイドもそっか、とあっさり納得したようだ。\
+
+「───まあ、こっちも言い過ぎた。こういう修羅場っていうのは初めてだったから、気が動転してたんだ」
+; 中央<夜>=アルクェイド:不満（不満そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t14.jpg",%type_crossfade_fst
+
+「……別にいいよ。悪かったのはわたしの方みたいだから」
+　アルクェイドはやけに素直にうなずいた。
+　なんか、それはそれで裏がありそうで恐いな、と思ってしまう自分が後ろめたい。
+　……そもそも、どうしてアルクェイドはうちにやってきたりしたんだろう……？\
+
+「ところでさ、どうしてうちに来たりしたんだよ。……まあ、こっちもおまえに話があったから、ちょうど良かったっていえば良かったんだけど」
+; 中央<夜>=アルクェイド:不満（不満そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t11.jpg",%type_crossfade_fst
+「そうなの？　わたしはただ、志貴はどうしてるのかなって様子を見に来ただけなんだけど」
+「……そうか。頼むから、次はどこか目立たないところでこっそり見に来てくれ。できるだけ誰にもみつからないようにな」
+　……なんだか、どっと疲れた。\
+
+「―――ともかくだ、真剣に話したいことがある。ここじゃ落ち着かないから場所を変えたいんだけど、いいか？」
+; 中央<夜>=アルクェイド:不満（不満そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t03.jpg",%type_crossfade_fst
+
+「いいけど―――話ってなによ」
+「すぐにわかる。……そうだな、そろそろ人気もなくなるし、公園あたりがいいかもしれない」
+　行くよ、と声をかけて歩き始める。
+; 中央を消去<左シャッター(中)>
+cl c,%type_lshutter_mid
+
+　アルクェイドは首をかしげながら、大人しく後についてきた。\
+
+; 黒画面<左カーテン(中)>
+bg "image\bg\ima_10.jpg",%type_lcartain_mid
+;CD-DA停止
+playstop
+
+!w1000
+
+
+return
+
+;ブロック番号 138
+*s138
+
+
+; 屋外一般 : 坂・交差点・街 : 街・映画館前（夜）<瞬時表示>
+bg "image\bg\bg_25b.jpg",%type_nowaitdisp
+
+―――夜は始まったばかりだ。
+　いや、正確に言うのなら、アルクェイドが出歩いているとしたら日中よりは夜、それも深夜に近い時間帯だろう。
+br
+「……やっぱり街を中心に探しまわったほうが効率的か」
+　……考えたくないが、吸血鬼事件の犠牲者はたいてい路地裏で発見される。
+　アルクェイドを―――いや、まだ続いている吸血鬼殺人の犯人を探すのなら、街を地道に探しまわるしかないだろう。\
+
+「―――くそ。なにやってるんだろう、俺は！」
+　自分で自分の気持ちがわからず、悪態をついてまたあてもなく走り始めた。\
+
+
+; 黒画面<左カーテン(遅)>
+bg "image\bg\ima_10.jpg",%type_lcartain_slw
+; 街・繁華街（夜）<左カーテン(中)>
+bg "image\bg\bg_26a.jpg",%type_lcartain_mid
+
+「――――――はあ」
+　どさり、とガードレールに腰を下ろす。
+　あれから数時間。
+　あてもなく探しまわってみたはいいが、アルクェイドの姿は影も形も見当たらない。\
+
+「…………くそ」
+　すごく、悔しい。
+　そりゃあ街の中でなんのアテもなく人を見つけ出すのがどれだけ困難かわかってはいたけど、アイツにかぎってはあっさりと見付かるって、心のどこかで楽観していた。
+br
+「どこいったんだよ、アイツ……」
+　……どうしてだろう。
+　別にアイツには吸血鬼殺人の話を聞くだけなのに、会えないとわかると、ひどく―――\
+
+「ああ、やめやめ。こんなのはもう止めだ」
+　ガードレールから立ちあがって歩き出す。
+　いいかげん時刻も午前零時になろうとしている。　これ以上はアルクェイドを捜す、なんていう無駄な事はやっていられない。
+「……………」
+　でもまあ、ここまできたらもう少しだけ。
+　最後にもう一箇所だけ様子を見てみて、それで見付からなかったら屋敷に帰ろう。\
+
+; 黒画面<左カーテン(中)>
+bg "image\bg\ima_10.jpg",%type_lcartain_mid
+; 公園入り口（夜）<左カーテン(中)>
+bg "image\bg\bg_27b.jpg",%type_lcartain_mid
+
+　……人気のない公園。
+　あの夜、アルクェイドに協力して、ネロという吸血鬼を倒した場所にやってきた。
+　街を捜してばかりいたから、今夜はここには立ち寄っていない。
+「……まあ、見付かりっこないんだけど……」
+　ぼやいて、公園の中へ足を踏み入れる。\
+
+; 公園Ａ（夜）<左カーテン(中)>
+bg "image\bg\bg_28b.jpg",%type_lcartain_mid
+
+　夜の十二時。
+　さすがにこの時間になると、公園に人気はない。　ここまで誰もいないと、逆にさっぱりとするぐらいだ。\
+
+「……そうだよな。そう都合よく見付かるはずなんてなかった」
+　はあ、と両肩を落とす。
+「………バカだな。なにがっかりしてるんだろ、俺」
+　自分でもわからない。
+　ただ、もう一度ぐらい―――アイツの笑顔とか、見ておきたかったのかも、しれない。\
+
+; 中央<夜>=アルクェイド:喜01（基本的笑顔）<左シャッター(中)>
+ld c,":a;image\tachi\ark_t08.jpg",%type_lshutter_fst
+「あ、いたいた。こんばんは、志貴」
+br
+　……そう、こんなふうに、吸血鬼なんて信じられないぐらいの気軽さで話しかけてくるアイツの顔を――――
+br
+「ア、	アルクェイド―――！？」
+　思わず。そのまま、アルクェイドの両肩を掴まえていた。
+; 中央<夜>=アルクェイド:驚き01（大きな驚き）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t12.jpg",%type_crossfade_fst
+「えっ―――」　
+　びくっ、と驚くアルクェイド。
+　掴まえたアルクェイドの肩は確かに現実で、あわてて両手を離す。
+; 中央を消去<クロスフェード(中)>
+cl c,%type_crossfade_fst
+\
+
+「お、おまえ、なんで――――」
+　ずっと捜していた相手が目の前にいるっていうのに、混乱した俺の頭はそんな事しか喋らせてくれない。
+; 中央<夜>=アルクェイド:驚き01（大きな驚き）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t03.jpg",%type_crossfade_fst
+「なんでって、おかしいかな。志貴のことを捜してたんだから、こうして会うのは偶然じゃないと思うけど」
+「え―――俺を捜してたって、なんで？」
+; 中央<夜>=アルクェイド:驚き01（大きな驚き）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t06.jpg",%type_crossfade_fst
+「なんでって―――別に理由なんてないけど」
+　きっぱりと、理由のない事を堂々と言いきるアルクェイド。\
+
+「……………」
+　……忘れてた。コイツは、そういう猫みたいなヤツだったんだっけ。
+「……まあ、ちょうど良かった。実をいうとさ、俺もアルクェイドに会いたかったんだ。ここで会えて、その――――」
+　本当に嬉しい、なんて言いそうになって、慌てて言葉を飲む。\
+
+「―――ともかくだ、真剣に話たいことがある。ここじゃ落ち着かないから場所を変えたいんだけど、いいか？」
+「いいけど―――話ってなによ」
+「すぐにわかる。……もう少し奥のほうに移動しよう」
+　行くよ、と声をかけて歩き始める。
+; 中央を消去<左シャッター(遅)>
+cl c,%type_lshutter_mid
+　アルクェイドは首をかしげながら、大人しくこちらの後についてくる。\
+
+; 黒画面<左カーテン(中)>
+bg "image\bg\ima_10.jpg",%type_lcartain_mid
+
+
+
+return
+
+;ブロック番号 139
+*s139
+
+
+
+; 公園Ｂ（夜）<左カーテン(中)>
+bg "image\bg\bg_29b.jpg",%type_lcartain_mid
+
+
+; 中央<夜>=アルクェイド:楽04（腕組、ちょっと不機嫌そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t04.jpg",%type_crossfade_fst
+
+;CD-DA「館・夜」
+play "*1"
+
+「それで話ってなんなの、志貴？」
+「吸血鬼のこと。おまえ、前に言ったよな。巷を騒がしている通り魔殺人は吸血鬼の仕業だって」
+　ええ、とアルクェイドは頷く。
+「それじゃあ、今朝のニュースでまた新しい犠牲者が出たっていうのは知ってるか？　昨日の夜に通り魔に殺されて、血を抜かれたらしいんだけど」
+; 中央<夜>=アルクェイド:楽04（腕組、ちょっと不機嫌そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t06.jpg",%type_crossfade_fst
+
+「―――――」
+　……アルクェイドの瞳が細まる。
+　なにか。
+　背筋が凍えるような、緊迫感。\
+
+; 中央<夜>=アルクェイド:楽04（腕組、ちょっと不機嫌そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t07.jpg",%type_crossfade_fst
+「ふぅん、それで？」
+「それでって―――おまえ」
+　ごくり、と唾を飲みこむ。
+　アルクェイドの視線は、まっすぐに俺を捉えている。
+　まるで―――こっちが少しでも動けば、即座に襲いかかってきそうな、そんな視線。\
+
+「お―――おかしいじゃないか、アルクェイド。
+　ネロは死んだはずだろ。なのに、どうしてまだ吸血鬼騒ぎがおこっているんだ。まさかとは思うけど、あれは、おまえが―――」\
+; 中央<夜>=アルクェイド:楽04（腕組、ちょっと不機嫌そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t03.jpg",%type_crossfade_fst
+
+「そんなワケないでしょ。それはわたしじゃなくて、他の吸血種の仕業よ」
+　あっさりと緊張を解いて、呆れたようにアルクェイドは即答した。
+　けれどこっちは納得がいかない。\
+
+「なんだよそれ。他の吸血種の仕業って、そう次から次へと吸血鬼が出てくるっていうのか」
+; 中央<夜>=アルクェイド:楽04（腕組、ちょっと不機嫌そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t01b.jpg",%type_crossfade_fst
+
+「まさか。あの連続殺人事件っていうのは初めから一人の吸血種の仕業だもの。新しい吸血種なんてのはやってこないし、ネロだってあの事件にはまったく関係がないわ」
+br
+――――え？
+　ネロだって、関係ない……？
+br
+「な―――それ、どういう意味だよ」
+「言ったとおりの意味だけど。……もう、志貴ってキレるようでいてどこか抜けてるのね。いい？　たしかにネロは吸血種だったけど、あいつは人の血を吸っていた？」\
+; 中央を消去<クロスフェード(速)>
+cl c,%type_crossfade_fst
+
+
+「吸っていたかって、あいつは人間をバリバリと頭から食ってただろ―――って、あ」
+br
+　そう、か。
+　なんでそんな単純な間違いに気がつかなかったっていうんだろう。
+　通り魔殺人の被害者たちは、血を抜かれた遺体として発見されている。\
+
+　けれどネロは違う。
+　あいつは一切死体を残さない。血を吸うどころか肉さえ食らって、その痕跡を無くしてしまう。
+　現に、ホテルでアイツに食われてしまった人たちは殺人事件としてではなく、行方不明者として扱われていた。
+br
+　なら―――それは、明らかに巷で起こっている事件とは違うものだ。\
+
+「まってくれ。それじゃあ今起きている殺人事件はなんなんだ。いったいどこの誰があんな真似をしているっていうんだよ」
+; 中央<夜>=アルクェイド:楽04（腕組、ちょっと不機嫌そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t03.jpg",%type_crossfade_fst
+
+「だから、あの事件はネロと別の吸血種の仕業なのよ。正確にいうとソイツがいるからわたしがこの街にやってきて、ネロはわたしを追いかけてこの街にやってきた、っていう相関図かな」
+「―――な。そ、それじゃあおまえが追っている敵っていうのはネロじゃなかったのか！？」\
+
+; 中央<夜>=アルクェイド:楽04（腕組、ちょっと不機嫌そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t01a.jpg",%type_crossfade_fst
+
+「ええ。わたし、初めから自分の標的がネロだなんて言わなかったでしょ？
+　ネロにとっての標的はわたしだったけど、わたしにとっての標的はネロじゃなくて、この街で通り魔って言われている吸血鬼だけよ。
+; 中央<夜>=アルクェイド:楽04（腕組、ちょっと不機嫌そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t11.jpg",%type_crossfade_fst
+
+「……志貴。まさかとは思うけど、もしかしてすごく単純な勘違いしてたとか？」\
+; 中央を消去<クロスフェード(速)>
+cl c,%type_crossfade_fst
+
+
+「な―――――」
+　愕然と息を飲む。
+　けど―――たしかにアルクェイドの言うとおりだ。
+　アルクェイドの目的が吸血鬼殺しだというから、俺は完全に早とちりして、こいつはネロを倒すためにいるんだってばかり思ってた――――
+br
+「……それじゃあ何か？　あの夜ネロと殺しあったのは、実はまったく無意味なことだったっていうのか………！？」\
+
+; 中央<夜>=アルクェイド:楽04（腕組、ちょっと不機嫌そう）<クロスフェード(速)>
+ld c,":a;image\tachi\ark_t01b.jpg",%type_crossfade_fst
+
+「無意味じゃないわ。志貴はわたしの代わりに戦ってくれたんじゃない。ま、もっとも志貴さえわたしを殺さなかったら、あんな事にはならなかったでしょうけどね」
+br
+「――――――」
+　くらり、と目眩がする。\
+
+「……つまり、ネロは吸血鬼殺人にはまったく関係なくて、ここ一ヶ月街を騒がしているのは別の吸血鬼の仕業ってこと……？」
+
+「うん、そうゆうこと。でも、これはわたしが済ませる問題だから志貴は気にしないでいいよ。そんなコトより、ねえ」\
+;CD-DA停止
+playstop
+
+; 中央を消去<クロスフェード(速)>
+cl c,%type_crossfade_fst
+
+　やけに楽しそうな笑顔をうかべて、アルクェイドは呆然としている俺を見上げてくる。
+br
+「昨夜はどうだった？　誰が出てきた？」\
+
+
+
+
+return
+

@@ -1,0 +1,450 @@
+;-------------------------------------------------------------------------------
+; Copyright (C) 1999,2000 TYPE-MOON AllRight Reserved.
+;
+;       TYPE-MOON Define File for NScripter Ver.1.24 or upper
+;
+;   title   : 月姫 フロー - 定義ファイル
+;	file	: 0.txt
+;   written : N.Kiyotake
+;
+;	Ver.0.1	: 2000年 4月 8日	作成
+;	Ver.1.0 : 2000年 7月20日	夏コミVersion(HalfMoon)開始
+;	Ver.1.1 : 2000年 7月29日	夏コミVersion[変数設定/効果音エイリアス変更]
+;	Ver.1.2	: 2000年 8月 7日	夏コミVersion販売分
+;	Ver.2.0	: 2000年10月23日	月姫〜完全版〜
+;-------------------------------------------------------------------------------
+
+;-------------------------------------------------------------------------------
+;	定義ブロック開始
+;-------------------------------------------------------------------------------
+*define
+
+;-------------------------------------------------------------------------------
+;	実行ファイル設定
+;-------------------------------------------------------------------------------
+;バージョン情報表示設定
+versionstr "月姫 Ver.2.1","Copyright (C) 2000,2001,2003 TYPE-MOON All Rights Reserved."
+
+;マウスカーソル設定
+;mousecursor "cursor.cur"
+
+;ウィンドウタイトル
+caption "月姫"
+
+;[表示速度]メニューを非表示
+;killmenu 2
+
+;-------------------------------------------------------------------------------
+;	プラグインの読み込み
+;-------------------------------------------------------------------------------
+;jpegファイル用SusiePlagin
+spi "jpgplgin.dll|jpg"
+
+arc "arc.sar|scrunarc.dll"
+
+;-------------------------------------------------------------------------------
+;	エフェクトの設定 : effect 設定するエフェクト番号(1〜), 効果番号(1〜18)[, 時間, パターン画像名]
+;-------------------------------------------------------------------------------
+;速度の指定(エイリアス)
+numalias effect_fst,400
+numalias effect_mid,800
+numalias effect_slw,1500
+
+;エフェクトの番号のエイリアス
+numalias waitdisp,0
+numalias nowaitdisp,1
+numalias lshutter_fst,2
+numalias lshutter_mid,3
+numalias lshutter_slw,4
+numalias rshutter_fst,5
+numalias rshutter_mid,6
+numalias rshutter_slw,7
+numalias tshutter_fst,8
+numalias tshutter_mid,9
+numalias tshutter_slw,10
+numalias bshutter_fst,11
+numalias bshutter_mid,12
+numalias bshutter_slw,13
+numalias lcartain_fst,14
+numalias lcartain_mid,15
+numalias lcartain_slw,16
+numalias rcartain_fst,17
+numalias rcartain_mid,18
+numalias rcartain_slw,19
+numalias tcartain_fst,20
+numalias tcartain_mid,21
+numalias tcartain_slw,22
+numalias bcartain_fst,23
+numalias bcartain_mid,24
+numalias bcartain_slw,25
+numalias crossfade_fst,26
+numalias crossfade_mid,27
+numalias crossfade_slw,28
+numalias lscroll_fst,29
+numalias lscroll_mid,30
+numalias lscroll_slw,31
+numalias rscroll_fst,32
+numalias rscroll_mid,33
+numalias rscroll_slw,34
+numalias tscroll_fst,35
+numalias tscroll_mid,36
+numalias tscroll_slw,37
+numalias bscroll_fst,38
+numalias bscroll_mid,39
+numalias bscroll_slw,40
+;numalias rmaskfade_fst,41
+;numalias rmaskfade_mid,42
+;numalias rmaskfade_slw,43
+;numalias lmaskfade_fst,44
+;numalias lmaskfade_mid,45
+;numalias lmaskfade_slw,46
+numalias rmaskcross_fst,41
+numalias rmaskcross_mid,42
+numalias rmaskcross_slw,43
+numalias lmaskcross_fst,44
+numalias lmaskcross_mid,45
+numalias lmaskcross_slw,46
+
+;基本的なエフェクト
+;0/waitdisp		: 表示を行わない。次の表示命令で同時に表示する。(デフォルト)
+;1/nowaitdisp	: 瞬時に表示する。(デフォルト)
+
+;シャッター
+effect lshutter_fst,2,effect_fst
+effect lshutter_mid,2,effect_mid
+effect lshutter_slw,2,effect_slw
+effect rshutter_fst,3,effect_fst
+effect rshutter_mid,3,effect_mid
+effect rshutter_slw,3,effect_slw
+effect tshutter_fst,4,effect_fst
+effect tshutter_mid,4,effect_mid
+effect tshutter_slw,4,effect_slw
+effect bshutter_fst,5,effect_fst
+effect bshutter_mid,5,effect_mid
+effect bshutter_slw,5,effect_slw
+
+;カーテン
+effect lcartain_fst,6,effect_fst
+effect lcartain_mid,6,effect_mid
+effect lcartain_slw,6,effect_slw
+effect rcartain_fst,7,effect_fst
+effect rcartain_mid,7,effect_mid
+effect rcartain_slw,7,effect_slw
+effect tcartain_fst,8,effect_fst
+effect tcartain_mid,8,effect_mid
+effect tcartain_slw,8,effect_slw
+effect bcartain_fst,9,effect_fst
+effect bcartain_mid,9,effect_mid
+effect bcartain_slw,9,effect_slw
+
+;クロスフェード
+effect crossfade_fst,10,effect_fst
+effect crossfade_mid,10,effect_mid
+effect crossfade_slw,10,effect_slw
+
+;スクロール
+effect lscroll_fst,11,effect_fst
+effect lscroll_mid,11,effect_mid
+effect lscroll_slw,11,effect_slw
+effect rscroll_fst,12,effect_fst
+effect rscroll_mid,12,effect_mid
+effect rscroll_slw,12,effect_slw
+effect tscroll_fst,13,effect_fst
+effect tscroll_mid,13,effect_mid
+effect tscroll_slw,13,effect_slw
+effect bscroll_fst,14,effect_fst
+effect bscroll_mid,14,effect_mid
+effect bscroll_slw,14,effect_slw
+
+;マスクパターンによるフェード
+;effect rmaskfade_fst,15,effect_fst,"image\rfade.jpg"
+;effect rmaskfade_mid,15,effect_mid,"image\rfade.jpg"
+;effect rmaskfade_slw,15,effect_slw,"image\rfade.jpg"
+;effect lmaskfade_fst,15,effect_fst,"image\lfade.jpg"
+;effect lmaskfade_mid,15,effect_mid,"image\lfade.jpg"
+;effect lmaskfade_slw,15,effect_slw,"image\lfade.jpg"
+
+;マスクパターンによるクロスフェード
+effect rmaskcross_fst,18,effect_fst,"image\rfade.jpg"
+effect rmaskcross_mid,18,effect_mid,"image\rfade.jpg"
+effect rmaskcross_slw,18,effect_slw,"image\rfade.jpg"
+effect lmaskcross_fst,18,effect_fst,"image\lfade.jpg"
+effect lmaskcross_mid,18,effect_mid,"image\lfade.jpg"
+effect lmaskcross_slw,18,effect_slw,"image\lfade.jpg"
+
+;ex.) ウィンドウの出現時にピクセル単位のクロスフェードを300ミリ秒で実行する
+windoweffect 10,300
+
+;エフェクトからの復帰時間を設定(50ミリ秒)
+effectblank 50
+
+;CDフェードアウトの時間(ミリ秒)
+cdfadeout 2000
+
+;-------------------------------------------------------------------------------
+;	通常モード時の設定
+;-------------------------------------------------------------------------------
+;指定の文字を表示したら、クリック待ちを行う
+;もし、現在の行が画面の一番下(とひとつ上の行)であれば、改ページ待ちになる
+clickstr "」。！？", 2
+
+;フォントの設定(デフォルトは"ＭＳ ゴシック")
+;defaultfont "ＭＳ ゴシック"
+
+;選択肢に設定されている色 : マウスが上にある時, 無い時
+selectcolor #ffffff,#aaaaaa
+
+;右クリックメニューの設定
+menusetwindow 18,18,2,2,0,1,#cccccc
+
+;右クリックメニューでの文字の色 : マウスが上にある時, 無い時, セーブファイルが無い時
+menuselectcolor #ffffff,#aaaaaa,#aaaaaa
+
+;右クリックしたときのメニューの設定
+rmenu "画像のみ表示", windowerase, "回想する", lookback, "次の選択肢に進む", skip, "記憶を退避する（セーブ）", save, "記憶を復元する（ロード）", load, "タイトルへ戻る", reset
+
+;セーブの数
+savenumber 20
+
+;セーブの名称
+savename "□■記憶を退避する■□","■□記憶を復元する□■","記憶"
+
+;クリック待ちでクリックしたときになる効果音
+;clickvoice "click.wav"
+
+;メニュー選択時の効果音 : メニューが開くとき, メニューをキャンセルした時, 選択肢の上に移動した時
+;menuselectvoice "menuopen.wav", "menucancel.wav", "menuover.wav"
+
+;-------------------------------------------------------------------------------
+;	回想モード時の設定
+;-------------------------------------------------------------------------------
+;回想モード時のボタン用ビットマップ
+lookbackbutton "icon\uoncur.bmp", "icon\uoffcur.bmp", "icon\doncur.bmp", "icon\doffcur.bmp"
+
+;回想モード時の文字色
+lookbackcolor #ffffd0
+
+;回想モード時にページをめくったときの効果音
+;lookbackvoice "turnover.wav"
+
+;-------------------------------------------------------------------------------
+;	エイリアス設定(すべての変数は変数名登録を行う)
+;-------------------------------------------------------------------------------
+;0〜199は一時変数でゲーム毎に初期化される。セーブ時に持ち越し出来る。
+;200〜999はグローバル変数で常に保存される(CD起動では保存できない)。
+
+;一時変数 ----------------------------------------------------------------------
+;好感度
+numalias ark_regard,50
+numalias ciel_regard,51
+numalias akiha_regard,52
+numalias kohaku_regard,53
+numalias hisui_regard,54
+
+;各種フラグ
+numalias flg1,100
+numalias flg2,101
+numalias flg3,102
+numalias flg4,103
+numalias flg5,104
+numalias flg6,105
+numalias flg7,106
+numalias flg8,107
+numalias flg9,108
+numalias flgA,109
+numalias flgB,110
+numalias flgC,111
+numalias flgD,112
+numalias flgE,113
+numalias flgF,114
+numalias flgG,115
+numalias flgH,116
+numalias flgI,117
+numalias flgJ,118
+numalias flgK,119
+numalias flgL,120
+numalias flgM,121
+numalias flgN,122
+numalias flgO,123
+numalias flgP,124
+numalias flgQ,125
+numalias flgR,126
+numalias flgS,127
+numalias flgT,128
+numalias flgU,129
+numalias flgV,130
+numalias flgW,131
+numalias flgX,132
+numalias flgY,133
+numalias flgZ,134
+
+;グローバル変数 ----------------------------------------------------------------
+;起動回数
+numalias execution_cnt,200
+
+;クリアしたか？(クリアしたら cleared)
+numalias clear_ark,210
+numalias clear_ciel,211
+numalias clear_akiha,212
+numalias clear_kohaku,213
+numalias clear_hisui,214
+
+;誰かでクリアした
+numalias cleared,215
+
+;種類別でクリアしたか？
+numalias clear_ark_true,216
+numalias clear_ark_good,217
+numalias clear_ciel_true,218
+numalias clear_ciel_good,219
+numalias clear_akiha_true,220
+numalias clear_akiha_good,221
+numalias clear_kohaku_true,222
+numalias clear_kohaku_good,223
+numalias clear_hisui_true,224
+numalias clear_hisui_good,225
+
+;アイテム
+numalias ciel_amulet,300
+
+;ゲーム設定
+numalias effectskip,350
+numalias sceneskip,351
+
+;	オリジナルエフェクトの設定
+numalias lastbg,499
+numalias flushcount,498
+numalias phasetitle_a,497
+numalias phasetitle_b,496
+numalias phasebg,495
+numalias buttonno,494
+numalias debugmode,493
+numalias rockending,492
+numalias waittime,491
+numalias staffrollwait,490
+numalias dispdays,489
+
+;アルクエイドでノーマルエンドしたか？
+numalias ark_normalcleared,450
+
+;エフェクト番号を保持するパラメータ
+numalias type_waitdisp,500
+numalias type_nowaitdisp,501
+numalias type_lshutter_fst,502
+numalias type_lshutter_mid,503
+numalias type_lshutter_slw,504
+numalias type_rshutter_fst,505
+numalias type_rshutter_mid,506
+numalias type_rshutter_slw,507
+numalias type_tshutter_fst,508
+numalias type_tshutter_mid,509
+numalias type_tshutter_slw,510
+numalias type_bshutter_fst,511
+numalias type_bshutter_mid,512
+numalias type_bshutter_slw,513
+numalias type_lcartain_fst,514
+numalias type_lcartain_mid,515
+numalias type_lcartain_slw,516
+numalias type_rcartain_fst,517
+numalias type_rcartain_mid,518
+numalias type_rcartain_slw,519
+numalias type_tcartain_fst,520
+numalias type_tcartain_mid,521
+numalias type_tcartain_slw,522
+numalias type_bcartain_fst,523
+numalias type_bcartain_mid,524
+numalias type_bcartain_slw,525
+numalias type_crossfade_fst,526
+numalias type_crossfade_mid,527
+numalias type_crossfade_slw,528
+numalias type_lscroll_fst,529
+numalias type_lscroll_mid,530
+numalias type_lscroll_slw,531
+numalias type_rscroll_fst,532
+numalias type_rscroll_mid,533
+numalias type_rscroll_slw,534
+numalias type_tscroll_fst,535
+numalias type_tscroll_mid,536
+numalias type_tscroll_slw,537
+numalias type_bscroll_fst,538
+numalias type_bscroll_mid,539
+numalias type_bscroll_slw,540
+numalias type_rmaskcross_fst,541
+numalias type_rmaskcross_mid,542
+numalias type_rmaskcross_slw,543
+numalias type_lmaskcross_fst,544
+numalias type_lmaskcross_mid,545
+numalias type_lmaskcross_slw,546
+
+;-------------------------------------------------------------------------------
+;	定数設定
+;-------------------------------------------------------------------------------
+;それぞれの女の子
+numalias ark,1
+numalias ciel,2
+numalias akiha,4
+numalias kohaku,8
+numalias hisui,16
+
+;効果音エイリアス
+stralias se0,"wave\se_01.wav"
+stralias se1,"wave\se_02.wav"
+stralias se2,"wave\se_03.wav"
+stralias se3,"wave\se_04.wav"
+stralias se4,"wave\se_05.wav"
+stralias se5,"wave\se_06.wav"
+stralias se6,"wave\se_07.wav"
+stralias se7,"wave\se_08.wav"
+stralias se8,"wave\se_09.wav"
+stralias se9,"wave\se_10.wav"
+stralias se10,"wave\se_11.wav"
+stralias se11,"wave\se_12.wav"
+stralias se12,"wave\se_13.wav"
+stralias se13,"wave\se_14.wav"
+stralias se14,"wave\se_15.wav"
+
+;-------------------------------------------------------------------------------
+;	記録設定
+;-------------------------------------------------------------------------------
+;グローバル変数を保存する
+globalon
+
+;ファイルログを記録する
+filelog
+
+;デバッグ用定義
+stralias p0,":c;image\debug\0.jpg"
+stralias p1,":c;image\debug\1.jpg"
+stralias p2,":c;image\debug\2.jpg"
+stralias p3,":c;image\debug\3.jpg"
+stralias p4,":c;image\debug\4.jpg"
+stralias p5,":c;image\debug\5.jpg"
+stralias p6,":c;image\debug\6.jpg"
+stralias p7,":c;image\debug\7.jpg"
+stralias p8,":c;image\debug\8.jpg"
+stralias p9,":c;image\debug\9.jpg"
+stralias p10,":c;image\debug\10.jpg"
+stralias p11,":c;image\debug\11.jpg"
+stralias p12,":c;image\debug\12.jpg"
+stralias p13,":c;image\debug\13.jpg"
+stralias p14,":c;image\debug\14.jpg"
+stralias p15,":c;image\debug\15.jpg"
+stralias p16,":c;image\debug\16.jpg"
+stralias p17,":c;image\debug\17.jpg"
+stralias p18,":c;image\debug\18.jpg"
+stralias p19,":c;image\debug\19.jpg"
+stralias p20,":c;image\debug\20.jpg"
+numalias regard,127
+numalias spno,126
+numalias image,125
+numalias ypos,124
+
+;-------------------------------------------------------------------------------
+;	定義ブロック終了
+;-------------------------------------------------------------------------------
+game
+
+
+
+
+
